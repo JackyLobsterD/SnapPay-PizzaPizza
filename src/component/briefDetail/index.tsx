@@ -25,7 +25,7 @@ class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
         <div className={styles.pizzaCal}>{briefDetailData.cal}</div>
         <div className={styles.pizzaPrice}>${briefDetailData.price}</div>
       </Fragment>
-    ):(<Fragment> </Fragment>);
+    ):(<Fragment/>);
   }
 }
 
