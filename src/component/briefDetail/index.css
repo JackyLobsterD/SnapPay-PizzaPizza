@@ -1,0 +1,39 @@
+.pizzaImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.pizzaName {
+    font-size: 40px;
+    font-weight: lighter;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.pizzaDesc {
+    font-size: 30px;
+    color: #BCB6B9;
+    font-weight: lighter;
+    margin-left: 50px;
+    padding-bottom: 50px;
+    line-height: 50px;
+}
+
+.pizzaCal {
+    font-size: 30px;
+    color: #BCB6B9;
+    font-weight: lighter;
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+
+.pizzaPrice {
+    font-size: 30px;
+    font-weight: lighter;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}

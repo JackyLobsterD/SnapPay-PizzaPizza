@@ -1,0 +1,28 @@
+
+.tab {
+    overflow: hidden;
+    border: 1px solid white;
+    background-color: white;
+}
+
+.tab button {
+    float: left;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    transition: 0.1s;
+    font-size: 10px;
+    font-weight: lighter;
+    width: 25%;
+
+}
+
+.tab button:hover {
+    background-color: black;
+    color: white;
+}
+
+.tab button.active {
+    background-color: black;
+    color: white;
+}
