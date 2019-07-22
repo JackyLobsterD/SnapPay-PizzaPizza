@@ -37,24 +37,10 @@ class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
                   );
                 })
               }
-              {
-                JSON.stringify(currentMenu)
-              }
-              this is menuItems
-
-
-            </div>
-          }
-
-
+            </div>}
         </div>
-
-
       </Fragment>
-
-
     );
-
   }
 }
 

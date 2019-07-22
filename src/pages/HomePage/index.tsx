@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
 import MenuTabs from '@/component/MenuTabs';
 import MenuItems from '@/component/MenuItems';
-import { isEmpty } from '@/utils/tools';
+import { isEmpty, getFromStorage } from '@/utils/tools';
 import router from 'umi/router';
-
+import { Button} from 'antd'
 
 interface HomePageProps {
   restaurants: any;
@@ -33,7 +33,10 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
 
   tabOnClick = (menuItemTitle: string, menuItemTitleIndex: number) => {
 
-    const { pizzaPizzaTemplate } = this.props.restaurants;
+    // const { pizzaPizzaTemplate } = this.props.restaurants;
+    const pizzaPizzaTemplate = getFromStorage('pizzaPizzaTemplate');
+
+
     const currentMenu = pizzaPizzaTemplate.data.menuPage.details[menuItemTitleIndex];
     this.setState({ menuItemTitle, menuItemTitleIndex, currentMenu });
   };
@@ -46,6 +49,13 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
 
   };
 
+  clearCart() {
+    this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
+  }
+
+  goToCart(){
+    router.push('/CartPage')
+  }
   render() {
     const { pizzaPizzaTemplate } = this.props.restaurants;
     const { currentMenu } = this.state;
@@ -55,11 +65,14 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
         return item.category;
       });
     }
-    console.log(this.props);
     return (
       <Fragment>
         <MenuTabs menuList={menuList} callbackFunc={this.tabOnClick}/>
         <MenuItems currentMenu={currentMenu} callbackFunc={this.itemOnClick}/>
+        <Button onClick={this.goToCart.bind(this)}>go to Cart</Button>
+        <Button onClick={this.clearCart.bind(this)}>Clear</Button>
+
+
       </Fragment>
     );
   }

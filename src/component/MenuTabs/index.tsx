@@ -12,6 +12,7 @@ interface IMenuTabsStates {
 class MenuTabs extends Component<IMenuTabsProps, IMenuTabsStates> {
   constructor(props: any) {
     super(props);
+    this.props.callbackFunc(this.props.menuList[0], 0)
   }
 
   render() {

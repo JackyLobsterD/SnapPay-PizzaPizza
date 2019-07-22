@@ -5,3 +5,9 @@ export function isEmpty(obj: object) {
   }
   return true;
 }
+
+export function getFromStorage(key: string) {
+  const stringContent = sessionStorage.getItem(key);
+  // @ts-ignore
+  return JSON.parse(stringContent);
+}
