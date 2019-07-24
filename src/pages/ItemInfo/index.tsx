@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { getFromStorage } from '@/utils/tools';
+import { getFromStorage, isEmpty } from '@/utils/tools';
 import BriefDetail from '@/component/briefDetail';
 import ExtraList from '@/component/ExtraList';
 import { Button, Select } from 'antd';
@@ -55,7 +55,9 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
         }
       }
     });
-    if (extraListError.length === 0) {
+
+    if (isEmpty(extraListError)) {
+      console.log(222);
       const newItemWithQuantity = Object.assign({}, newItem, { quantity });
       this.props.dispatch({ type: 'restaurants/fetchCartList', payload: newItemWithQuantity });
       router.goBack();

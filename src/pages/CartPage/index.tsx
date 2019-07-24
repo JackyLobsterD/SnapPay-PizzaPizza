@@ -107,17 +107,17 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
         {
           newCartList.map((el1:any, index1: any)=>{
             return(
-              <div>
+              <div key={index1}>
                 {el1.name} {`$${el1.itemTotalPrice}`}
                 {
                   el1.options.map((el2: any, index2: any)=>{
                     return(
-                      <div>
+                      <div key={index2}>
                         {el2.name}:
                         {
                           el2.options.map((el3:any, index3:any)=>{
                             return(
-                              <div>
+                              <div key={index3}>
                                 {el3.name}
                                 {el3.price!==0&& `$${el3.price}`}
                               </div>
