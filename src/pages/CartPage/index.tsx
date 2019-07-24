@@ -23,6 +23,11 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
     super(props);
     const newCartList = this.reformer(getFromStorage('cartList')).newCartList;
     const totalPrice= this.reformer(getFromStorage('cartList')).totalPrice
+
+
+
+
+
     this.state = {
       cartList: getFromStorage('cartList'),
       newCartList,

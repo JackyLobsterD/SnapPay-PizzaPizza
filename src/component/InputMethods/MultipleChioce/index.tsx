@@ -6,6 +6,7 @@ interface IMultipleChoiceProps {
   data: any;
   catIndex: number;
   callBackFunc: any;
+  itemError: any;
 }
 
 interface IMultipleChoiceStates {
@@ -40,13 +41,25 @@ class MultipleChoice extends Component<IMultipleChoiceProps, IMultipleChoiceStat
   render() {
     const { data } = this.props;
     const { Panel } = Collapse;
+    const errorMessage=(itemError:number)=>
+    {if (!itemError) {
+        return '';
+      } else if (itemError === 1) {
+        return 'required';
+      } else if (itemError === 2) {
+        return 'too less';
+      } else if (itemError === 3) {
+        return 'too Many';
+      }
+
+    }
     return (
       <Fragment>
         <Collapse expandIconPosition={'right'} bordered={true}
                   expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 180}/>}
                   defaultActiveKey={['1', '2']}
                   className={styles.list}>
-          <Panel header={data.name} key="1">
+          <Panel header={data.name + errorMessage(this.props.itemError)} key="1">
 
             {
               data.options.map((item: any, key: number) => {

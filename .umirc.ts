@@ -1,8 +1,14 @@
 import { IConfig } from 'umi-types';
+// @ts-ignore
+import pageRoutes from './config/router.config.js';
 
 // ref: https://umijs.org/config/
 const config: IConfig =  {
+
   treeShaking: true,
+  history: 'hash',
+  publicPath: './',
+
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
@@ -26,6 +32,7 @@ const config: IConfig =  {
       },
     }],
   ],
+  routes: pageRoutes,
 }
 
 export default config;

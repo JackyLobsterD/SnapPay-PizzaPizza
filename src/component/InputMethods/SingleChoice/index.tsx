@@ -68,4 +68,5 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
   }
 }
 
+// @ts-ignore
 export default SingleChoice;

@@ -4,7 +4,8 @@ import SingleChoice from '@/component/InputMethods/SingleChoice';
 
 interface IExtraListProps {
   options: Array<any>;
-  callbackFunc:any
+  callbackFunc: any;
+  extraListError: Array<any>;
 }
 
 interface IExtraListStates {
@@ -22,21 +23,21 @@ class ExtraList extends Component<IExtraListProps, IExtraListStates> {
   getSingleChoice(itemIndex: string, catIndex: number) {
     const newItem = { [catIndex]: itemIndex };
     const { extraList } = this.state;
-    const newExtraList= Object.assign({}, extraList, newItem)
+    const newExtraList = Object.assign({}, extraList, newItem);
     this.setState({
       extraList: newExtraList,
     });
-    this.props.callbackFunc(newExtraList)
+    this.props.callbackFunc(newExtraList);
   }
 
   getMultipleChoice(itemIndexes: Array<string>, catIndex: number) {
     const newItem = { [catIndex]: itemIndexes };
     const { extraList } = this.state;
-    const newExtraList = Object.assign({}, extraList, newItem)
+    const newExtraList = Object.assign({}, extraList, newItem);
     this.setState({
       extraList: newExtraList,
     });
-    this.props.callbackFunc(newExtraList)
+    this.props.callbackFunc(newExtraList);
   }
 
   render() {
@@ -50,7 +51,8 @@ class ExtraList extends Component<IExtraListProps, IExtraListStates> {
                 <SingleChoice data={item} callBackFunc={this.getSingleChoice.bind(this)} catIndex={key} key={key}/>);
             } else if (item.type === 'multiple') {
               return (
-                <MultipleChoice data={item} callBackFunc={this.getMultipleChoice.bind(this)} catIndex={key} key={key}/>);
+                <MultipleChoice data={item} callBackFunc={this.getMultipleChoice.bind(this)} catIndex={key}
+                                key={key} itemError={this.props.extraListError[key]}/>);
             } else {
               return (<div>coming soon</div>);
             }
@@ -61,4 +63,5 @@ class ExtraList extends Component<IExtraListProps, IExtraListStates> {
   }
 }
 
+// @ts-ignore
 export default ExtraList;

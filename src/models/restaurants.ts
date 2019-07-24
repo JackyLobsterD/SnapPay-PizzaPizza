@@ -39,6 +39,9 @@ export default {
         cartList,
       };
     },
+    saveToNewCartList: (state: any, { payload }: any) => {
+
+    }
   },
   effects: {
     * fetchPizzaPizzaTemplate({ payload }: any, { call, put }: any) {
@@ -54,6 +57,10 @@ export default {
     * fetchCartList({ payload }: any, { call, put }: any) {
       yield put({ type: 'saveToCartList', payload: payload });
     },
+    * fetchNewCartList({ payload }: any, { call, put }: any) {
+      yield put({ type: 'saveToNewCartList', payload: payload });
+
+    }
   },
 };
 

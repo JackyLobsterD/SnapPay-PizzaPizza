@@ -2,21 +2,14 @@ import React from 'react';
 import styles from './index.css';
 import { formatMessage } from 'umi-plugin-locale';
 import Link from 'umi/link';
+import router from 'umi/router';
 
 
 export default function() {
+  console.log('page/index');
+  router.push("/HomePage")
   return (
-    <div className={styles.normal}>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
-        <li>
-          <Link to={"/HomePage"}> cliick meeeeeeee</Link>
-          <a href="https://umijs.org/guide/getting-started.html">
-            {formatMessage({ id: 'index.start' })}
-          </a>
-        </li>
-      </ul>
+    <div>
     </div>
   );
 }
