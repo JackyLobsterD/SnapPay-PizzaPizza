@@ -104,6 +104,9 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
         <div>
           <Button onClick={this.clearCart.bind(this)}>clear</Button>
         </div>
+        <div>
+          <Button onClick={this.clearCart.bind(this)}>go back</Button>
+        </div>
       </Fragment>
     );
   }

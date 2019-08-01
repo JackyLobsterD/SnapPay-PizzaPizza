@@ -1,0 +1,12 @@
+.inputStyle{
+    display:block;
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    /*color: red;*/
+}
+
+.gMapCanvas{
+    width: 400px;
+    height: 50px;
+}

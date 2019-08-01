@@ -12,17 +12,21 @@ interface CartPageProps {
 }
 
 interface CartPageStates {
-  cartList: any,
+  cartList: any|undefined,
   newCartList: any,
-  totalPrice: number
+  totalPrice: number| undefined
 }
 
 
 class CartPage extends Component<CartPageProps, CartPageStates> {
   constructor(props: any) {
     super(props);
-    const newCartList = this.reformer(getFromStorage('cartList')).newCartList;
-    const totalPrice= this.reformer(getFromStorage('cartList')).totalPrice
+    console.log(getFromStorage('cartList'));
+    let reformed:any={}
+    if(getFromStorage('cartList')!==null){
+      console.log(111);
+      reformed = this.reformer(getFromStorage('cartList'));
+    }
 
 
 
@@ -30,8 +34,8 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
 
     this.state = {
       cartList: getFromStorage('cartList'),
-      newCartList,
-      totalPrice
+      newCartList: reformed.newCartList,
+      totalPrice: reformed.totalPrice
     };
 
   }
@@ -96,7 +100,7 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
     router.push('/ShippingPage');
   }
   render() {
-    const { cartList , newCartList} = this.state;
+    const { cartList , newCartList, totalPrice} = this.state;
     // const {briefDetail}=cartList;
     // console.log(cartList);
     // console.log(briefDetail);
@@ -105,7 +109,7 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
     return (
       <Fragment>
         {
-          newCartList.map((el1:any, index1: any)=>{
+          newCartList&&newCartList.map((el1:any, index1: any)=>{
             return(
               <div key={index1}>
                 {el1.name} {`$${el1.itemTotalPrice}`}
@@ -133,8 +137,11 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
             )
           })
         }
+        {
+          !newCartList&&<div>EMPTY</div>
+        }
         $$${
-          this.state.totalPrice
+          totalPrice
         }
 
         <Button onClick={this.goShipping}>go input Info</Button>
