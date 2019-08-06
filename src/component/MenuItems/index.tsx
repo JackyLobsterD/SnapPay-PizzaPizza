@@ -28,11 +28,17 @@ class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
                 !isEmpty(currentMenu)&& currentMenu.foodOptions.map((item: any, key: any) => {
                   return (
                     <div className={styles.pizzaMenu} key={key} onClick={()=>{this.props.callbackFunc(item.id, key)}}>
-                      <img src={item.briefDetail.pic}
-                           alt={item.briefDetail.name}/>
-                      <div>{item.briefDetail.name}</div>
-                      <div>{item.briefDetail.desc}</div>
-                      <div className={styles.pizzaMenuPrice}>${item.briefDetail.price}</div>
+                      <div className={styles.picArea}>
+                        <img src={item.briefDetail.pic} alt={item.briefDetail.name}/>
+                      </div>
+                      <div className={styles.textArea}>
+
+                        <div className={styles.pizzaName}>{item.briefDetail.name}</div>
+
+                        <div className={styles.pizzaDetail}>{item.briefDetail.desc}</div>
+
+                        <div className={styles.pizzaMenuPrice}>${item.briefDetail.price}</div>
+                      </div>
                     </div>
                   );
                 })

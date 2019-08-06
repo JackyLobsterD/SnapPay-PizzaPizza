@@ -53,12 +53,16 @@ form {
 }
 
 .nameLabel {
-    font-size: 26px;
-    font-weight: lighter;
-    float: left;
-    line-height: 45px;
+    /*line-height: 45px;*/
     display: inline;
     clear: both;
+    color: black;
+    font-size: 16px;
+    font-weight: lighter;
+    float: left;
+    margin-right: 10px;
+    vertical-align: middle;
+
 }
 
 .textarea {

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Modal, Select } from 'antd';
+import { Button, Modal, Select, Icon } from 'antd';
 import styles from './index.css';
 // @ts-ignore
 import geocoder from 'google-geocoder';
@@ -8,7 +8,6 @@ import geocoder from 'google-geocoder';
 import classifyPoint from 'robust-point-in-polygon';
 import { getFromStorage } from '@/utils/tools';
 import router from 'umi/router';
-import { placeholder } from '@babel/types';
 
 const { confirm } = Modal;
 const { Option, OptGroup } = Select;
@@ -28,7 +27,11 @@ interface ShippingPageStates {
   city: string;
   postalCode: string;
   isStoreExist: boolean;
-  currentStore: string;
+  currentStore: number;
+  name: string;
+  phone: string;
+  email: string;
+  storeList: any;
 }
 
 
@@ -42,7 +45,33 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
       city: '',
       postalCode: '',
       isStoreExist: false,
-      currentStore: 'NOT AVAILABLE'
+      currentStore: 0,
+      name: '',
+      phone: '',
+      email: '',
+      storeList:[
+        {
+          merchantId: '0000',
+          name: 'NOT AVAILABLE',
+          detail: 'no detail'
+        },
+        {
+          merchantId: 'pizza001',
+          name: 'p1',
+          detail: 'ppppp1'
+
+        },
+        {
+          merchantId: 'pizza002',
+          name: 'p2',
+          detail: 'ppppp2'
+        },
+        {
+          merchantId: 'pizza003',
+          name: 'p3',
+          detail: 'ppppp3'
+        }
+      ]
     };
 
   }
@@ -51,9 +80,6 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
 
     // @ts-ignore
     document.getElementById('myForm').submit();
-
-
-
 
 
     // const geo = geocoder({ key: 'AIzaSyCuNeDQfFowGcMhp3CeE5LxYN6eR5XjqTE' });
@@ -95,7 +121,9 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
     router.push('/HomePage');
   }
 
-  checkAvailablility(){
+  checkAvailablility() {
+    this.setState({currentStore:1});
+
     const geo = geocoder({ key: 'AIzaSyCuNeDQfFowGcMhp3CeE5LxYN6eR5XjqTE' });
     let coordinates;
     const currentAddress = `${this.state.street},${this.state.city},${this.state.province},${this.state.postalCode}`;
@@ -119,23 +147,55 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
       }
     });
   }
+
+  checkValid() {
+
+  }
+
   render() {
     const outputEntranceData = entranceData;
+    const priceList = getFromStorage('priceList');
+    console.log(priceList);
+
     const { cartList } = this.state;
     const hiddenFormType = 'text';
 
-    const inputSection=(name:string, value:string|undefined, placeholder:string, isReadOnly:boolean)=>{
-      return(
-        <tr>
-          <td className={styles.leftCell}>
-            <span>{name}:</span>
-          </td>
-          <td colSpan={2}>
-            <input type="text" placeholder={placeholder} value={value} className={styles.inputStyle} readOnly={isReadOnly}/>
-          </td>
-        </tr>
-      )
-    }
+    // const inputSection = (name: string, value: string | undefined, placeholder: string, isReadOnly: boolean) => {
+    //   return (
+    //     <tr>
+    //       <td className={styles.leftCell}>
+    //         <span>{name}:</span>
+    //       </td>
+    //       <td colSpan={2}>
+    //         <input type="text" placeholder={placeholder} value={value} className={styles.inputStyle}
+    //                readOnly={isReadOnly}/>
+    //       </td>
+    //     </tr>
+    //   );
+    // };
+
+    console.log(
+      {
+        name: this.state.name,
+        phone: this.state.phone,
+        email: this.state.email,
+        street: this.state.street,
+        city: this.state.city,
+        province: this.state.province,
+        postalCode: this.state.postalCode,
+        currentStore: this.state.currentStore,
+        subtotal: priceList.subtotal,
+        tax: priceList.tax,
+        deliveryFee: priceList.deliveryFee,
+        amountInDollar:priceList.total,
+        projectId: outputEntranceData.projectId,
+        merchantId: outputEntranceData.merchantId,
+        merchantName: outputEntranceData.merchantName,
+        payType: outputEntranceData.payType,
+        openId: outputEntranceData.openId,
+        cartList: this.state.cartList
+      },
+    );
     return (
       <Fragment>
 
@@ -149,12 +209,12 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             </div>
           </div>
           <hr className={styles.titleDivider}/>
-
-
           <table className={styles.tableStyle}>
+            <tbody>
             <tr>
               <td colSpan={3}>
-                <div>Enter Shipping Information</div>
+                <Icon type="shop" style={{ display: 'inline-block', color: '#2e94e4' }}/>
+                <div className={styles.enterTitle}>Enter Shipping Information</div>
               </td>
             </tr>
             {/*{inputSection('NameTest',undefined, 'input name',false)}*/}
@@ -163,7 +223,10 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
                 <span>Name:</span>
               </td>
               <td colSpan={2}>
-                <input pattern="[A-Za-z]{3}" type="text" name={'name'} placeholder={'input name'} className={styles.inputStyle} />
+                <input type="text" name={'name'}
+                       placeholder={'input name'}
+                       className={styles.inputStyle}
+                       onChange={(e) => this.setState({ name: e.target.value })}/>
               </td>
             </tr>
             <tr>
@@ -171,7 +234,11 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
                 <span>Phone:</span>
               </td>
               <td colSpan={2}>
-                <input type="tel" name={'phone'} placeholder={'phone'} className={styles.inputStyle}/>
+                <input type="tel"
+                       name={'phone'}
+                       placeholder={'phone'}
+                       className={styles.inputStyle}
+                       onChange={(e) => this.setState({ phone: e.target.value })}/>
               </td>
             </tr>
             <tr>
@@ -179,10 +246,13 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
                 <span>Email:</span>
               </td>
               <td colSpan={2}>
-                <input type="email" name={'email'} placeholder={'email'} className={styles.inputStyle}/>
+                <input type="email"
+                       name={'email'}
+                       placeholder={'email'}
+                       className={styles.inputStyle}
+                       onChange={(e) => this.setState({ email: e.target.value })}/>
               </td>
             </tr>
-
             <tr>
               <td className={styles.leftCell}>
                 <span>Street:</span>
@@ -190,12 +260,12 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
               <td colSpan={2}>
                 <input type="text"
                        name={'street'}
-                       value={this.state.street}
+                  // value={this.state.street}
                        onChange={this.handleChange.bind(this)}
                        placeholder={'street'}
-                       className={styles.inputStyle}/></td>
+                       className={styles.inputStyle}/>
+              </td>
             </tr>
-
             <tr>
               <td className={styles.leftCell}>
                 <span>City:</span>
@@ -203,13 +273,12 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
               <td colSpan={2}>
                 <input type="text"
                        name={'city'}
-                       value={this.state.city}
+                  // value={this.state.city}
                        onChange={this.handleChange.bind(this)}
                        placeholder={'city'}
                        className={styles.inputStyle}/>
               </td>
             </tr>
-
             <tr>
               <td className={styles.leftCell}>
                 <span>Province:</span>
@@ -231,7 +300,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
               <td colSpan={2}>
                 <input type="text"
                        name={'postalCode'}
-                       value={this.state.postalCode}
+                  // value={this.state.postalCode}
                        onChange={this.handleChange.bind(this)}
                        placeholder={'postal code'}
                        className={styles.inputStyle}/>
@@ -242,30 +311,48 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
                 <span>Store:</span>
               </td>
               <td>
-                <span>{this.state.currentStore}</span>
+                <span>{this.state.storeList[this.state.currentStore].name}</span>
               </td>
               <td>
-                <Button size={'small'} onClick={()=>this.checkAvailablility()}> check available</Button>
+                <Button size={'small'} onClick={() => this.checkAvailablility()}> check available</Button>
               </td>
             </tr>
+            </tbody>
           </table>
+
+          <input type={hiddenFormType}
+                 name={'comment'}
+                 value={getFromStorage('comment')}
+                 readOnly
+          />
+          <input type={hiddenFormType}
+                 name={'currentStore'}
+                 value={this.state.storeList[this.state.currentStore].detail}
+                 readOnly
+          />
+          <input type={hiddenFormType} name={'subtotal'} value={priceList.subtotal} readOnly/>
+          <input type={hiddenFormType} name={'tax'} value={priceList.tax} readOnly/>
+          <input type={hiddenFormType} name={'deliveryFee'} value={priceList.deliveryFee} readOnly/>
+          <input type={hiddenFormType} name={'amountInDollar'} value={priceList.total} readOnly/>
+
+          <input type={hiddenFormType} name={'project_id'} value={outputEntranceData.projectId} readOnly/>
+          <input type={hiddenFormType} name={'merchant_id'} value={outputEntranceData.merchantId} readOnly/>
+          <input type={hiddenFormType} name={'merchantName'} value={outputEntranceData.merchantName} readOnly/>
+          <input type={hiddenFormType} name={'pay_type'} value={outputEntranceData.payType} readOnly/>
+          <input type={hiddenFormType} name={'openId'} value={outputEntranceData.openId} readOnly/>
+          <input type={hiddenFormType} name={'cartList'} value={this.state.cartList} readOnly/>
+          <input type={hiddenFormType} name={'order_desc'} value={'pizzapizza'} readOnly/>
+          <input type={hiddenFormType}
+                 name={'sub_merchantId'}
+                 value={this.state.storeList[this.state.currentStore].merchantId}
+                 readOnly/>
+          <input type={hiddenFormType} name={'amount'} value={1} readOnly/>
+
 
           <div className={styles.inline}>
             <Button className={styles.cancel} onClick={() => this.clearCart()}>Clear Cart</Button>
-            <Button className={styles.next} onClick={()=>this.goPay()}>Next</Button>
+            <Button className={styles.next} onClick={() => this.goPay()}>Next</Button>
           </div>
-
-          <input type={hiddenFormType} name={'currentStore'} value={this.state.currentStore} readOnly/>
-
-          <input type={hiddenFormType} name={'projectId'} value={outputEntranceData.projectId} readOnly/>
-          <input type={hiddenFormType} name={'merchantId'} value={outputEntranceData.merchantId} readOnly/>
-          <input type={hiddenFormType} name={'merchantName'} value={outputEntranceData.merchantName} readOnly/>
-          <input type={hiddenFormType} name={'payType'} value={outputEntranceData.payType} readOnly/>
-          <input type={hiddenFormType} name={'openId'} value={outputEntranceData.openId} readOnly/>
-          <input type={hiddenFormType} name={'cartList'} value={2222} readOnly/>
-          {/*<input type={hiddenFormType} name="email" value={'jacky.duan@snappay.ca'}/>*/}
-          <input type={hiddenFormType} name="amount" value={1}/>
-
         </form>
       </Fragment>
     );

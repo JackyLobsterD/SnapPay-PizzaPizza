@@ -15,26 +15,37 @@ interface CartPageProps {
 interface CartPageStates {
   cartList: any | undefined,
   newCartList: any,
-  totalPrice: number | undefined
+  priceList: any,
+  comment: string
 }
 
 
 class CartPage extends Component<CartPageProps, CartPageStates> {
   constructor(props: any) {
     super(props);
+    const deliveryFee = 5;
+
+
     console.log(getFromStorage('cartList'));
     let reformed: any = {};
     if (getFromStorage('cartList') !== null) {
-      console.log(111);
       reformed = this.reformer(getFromStorage('cartList'));
     }
     this.props.dispatch({ type: 'restaurants/fetchSaveNewCartList', payload: reformed.newCartList });
-    this.props.dispatch({ type: 'restaurants/fetchSaveTotalPrice', payload: reformed.totalPrice });
+    const subtotal = parseFloat(String(reformed.totalPrice * 1)).toFixed(2);
+    const priceList = {
+      subtotal,
+      deliveryFee: deliveryFee,
+      tax: parseFloat(String((reformed.totalPrice + deliveryFee) * 0.13)).toFixed(2),
+      total: parseFloat(String((reformed.totalPrice + deliveryFee) * 1.13)).toFixed(2),
+    };
+    console.log(priceList);
+    this.props.dispatch({ type: 'restaurants/savePriceList', payload: priceList });
 
     this.state = {
       cartList: getFromStorage('cartList'),
       newCartList: reformed.newCartList,
-      totalPrice: reformed.totalPrice,
+      priceList,
     };
 
   }
@@ -102,23 +113,29 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
     router.push('/ShippingPage');
   }
 
-  goBack(){
-    router.goBack()
+  goBack() {
+    router.goBack();
   }
+
   render() {
-    const { newCartList, totalPrice } = this.state;
-    console.log(newCartList);
+    const { newCartList } = this.state;
     return (
       <Fragment>
 
         <div className={styles.headerCanvas}>
-          <div className={styles.headerCanvasBackButton} onClick={()=>this.goBack()}>&lt;&nbsp;Back</div>
+          <div className={styles.headerCanvasBackButton} onClick={() => this.goBack()}>&lt;&nbsp;Back</div>
 
           <div className={styles.headerCanvasTitle}>Review the cart
           </div>
         </div>
         <hr className={styles.titleDivider}/>
         <div className={styles.subheader}>Your Order</div>
+
+        <div className={styles.background}>
+          <div className={styles.separateLine}>
+          </div>
+        </div>
+
         {
           !isEmpty(newCartList) && newCartList.map((el1: any, index1: any) => {
             return (
@@ -127,12 +144,13 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
                   <tr>
                     <td className={styles.leftCell}>
                       <div className={styles.nameLabel} key={index1}>
-                        {`${el1.name} * ${el1.quantity}`}
+                        <span>{el1.name} </span>
+                        <span style={{ color: '#2e94e4'}}>* {el1.quantity}</span>
                       </div>
                     </td>
                     <td className={styles.rightCell}>
                       <div className={styles.highlightBlue}>
-                        {`$${el1.itemTotalPrice * el1.quantity}`}
+                        {`$${(el1.itemTotalPrice * el1.quantity).toFixed(2)}`}
                       </div>
                     </td>
                   </tr>
@@ -175,24 +193,24 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
         <div className={styles.summaryArea}>
           <div className={styles.total}>Subtotal
             <div className={styles.totalPrice}>
-              {this.state.totalPrice}
+              ${this.state.priceList.subtotal}
             </div>
           </div>
           <div className={styles.total}>Tax
             <div className={styles.totalPrice}>
-              {this.state.totalPrice && parseFloat(String(this.state.totalPrice * 0.13)).toFixed(2)}
+              ${this.state.priceList.tax}
             </div>
           </div>
           <div className={styles.total}>
             Delivery Fee
             <div className={styles.totalPrice}>
-              {1234}
+              ${this.state.priceList.deliveryFee}
             </div>
           </div>
           <div className={styles.total}>
             Total
             <div className={styles.totalPrice}>
-              {this.state.totalPrice && parseFloat(String(this.state.totalPrice * 1.13)).toFixed(2)}
+              ${this.state.priceList.total}
             </div>
           </div>
         </div>
@@ -205,12 +223,16 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
           <div className={styles.notesText}>Additional Notes:</div>
           <div style={{ width: '100%', textAlign: 'center' }}>
             <input className={styles.textarea}
-                   placeholder="Hello PizzaPizza, I need..."/>
+                   placeholder="Hello PizzaPizza, I need..."
+            onChange={(e)=>{
+              this.setState({ comment:e.target.value});
+              this.props.dispatch({ type: 'restaurants/saveComment', payload: e.target.value });
+            }}/>
           </div>
         </div>
 
         <div className={styles.inline}>
-          <Button className={styles.cancel} onClick={()=>this.clearCart()}>Clear Cart</Button>
+          <Button className={styles.cancel} onClick={() => this.clearCart()}>Clear Cart</Button>
           <Button className={styles.next} onClick={() => this.goShipping()}>Next</Button>
         </div>
       </Fragment>

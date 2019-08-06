@@ -17,13 +17,17 @@ class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
     const { briefDetailData}=this.props
     return briefDetailData?(
       <Fragment>
-        <div>
-          <img className={styles.pizzaImage} src="../../assets/buffalo-chicken-pizza.png" alt={briefDetailData.name}/>
+        <div className={styles.picArea}>
+          <img className={styles.pizzaImage} src={briefDetailData.pic} alt={briefDetailData.name}/>
         </div>
-        <div className={styles.pizzaName}>{briefDetailData.name}</div>
-        <div className={styles.pizzaDesc}>{briefDetailData.desc}</div>
-        <div className={styles.pizzaCal}>{briefDetailData.cal}</div>
-        <div className={styles.pizzaPrice}>${briefDetailData.price}</div>
+        <div className={styles.textArea}>
+          <div className={styles.textAreaInner}>
+            <div className={styles.pizzaName}>{briefDetailData.name}</div>
+            <div className={styles.pizzaDesc}>{briefDetailData.desc}</div>
+            <div className={styles.pizzaCal}>{briefDetailData.cal}</div>
+            <div className={styles.pizzaPrice}>${briefDetailData.price}</div>
+          </div>
+        </div>
       </Fragment>
     ):(<Fragment/>);
   }

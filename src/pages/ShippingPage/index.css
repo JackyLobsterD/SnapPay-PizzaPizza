@@ -53,12 +53,21 @@ form {
     padding-left: 20px;
 }
 
-.tableStyle tr{
+.tableStyle tr {
     border-bottom: 1px solid lightgray;
 }
 
-.leftCell{
+.enterTitle {
+
+    display: inline-block;
+    font-size: 24px;
+    padding: 15px 0 15px 10px;
+    font-weight: 600;
+}
+
+.leftCell {
     width: 30%;
+    padding: 20px 0;
 }
 
 input {
@@ -165,7 +174,7 @@ textarea {
 
 .inline {
     width: 90%;
-    margin: 50px 5% 0 5%;
+    margin: 50px 5% 200px 5%;
 }
 
 .cancel {

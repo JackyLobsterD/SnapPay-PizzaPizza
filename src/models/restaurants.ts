@@ -41,6 +41,20 @@ export default {
         cartList,
       };
     },
+    savePriceList: (state: any, { payload }: any) => {
+      saveToStorage('priceList', payload);
+      return {
+        ...state,
+        payload,
+      };
+    },
+    saveComment: (state: any, { payload }: any) => {
+      saveToStorage('comment', payload);
+      return {
+        ...state,
+        comment:payload,
+      };
+    },
     saveToNewCartList: (state: any, { payload }: any) => {
       saveToStorage('cartList', payload);
       return {

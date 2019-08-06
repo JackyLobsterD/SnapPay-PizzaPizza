@@ -1,6 +1,8 @@
 .background {
     background-color: white;
 }
+.picArea{
+}
 
 .pizzaImage {
     display: block;
@@ -11,9 +13,18 @@
     padding-bottom: 20px;
 }
 
+.textArea{
+    width: 100%;
+    text-align: center;
+}
+.textAreaInner{
+    display: inline-block;
+    width: 90%;
+    text-align: left;
+}
 .pizzaName {
     font-size: 16px;
-    font-weight: lighter;
+    font-weight: bold;
     margin-left: 15px;
     margin-bottom: 10px;
     font-family: Helvetica, serif;
@@ -26,7 +37,7 @@
     font-weight: lighter;
     margin-left: 15px;
     padding-bottom: 20px;
-    line-height: 30px;
+    /*line-height: 10px;*/
 }
 
 .pizzaCal {
@@ -41,9 +52,10 @@
 .pizzaPrice {
     font-family: Helvetica, serif;
     font-size: 15px;
-    font-weight: lighter;
+    font-weight: bold;
     margin-left: 15px;
     margin-bottom: 50px;
+    color: #000;
 }
 
 .sizePizza {

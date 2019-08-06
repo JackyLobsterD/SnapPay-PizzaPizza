@@ -78,11 +78,10 @@ form {
 
 .valueNumber {
     display: inline-block;
-    margin-left: 20px;
-    margin-right: -220px;
     font-size: 30px;
     color: #a49fa1;
     border: none;
+    padding: 0 20px;
     font-weight: lighter;
 }
 

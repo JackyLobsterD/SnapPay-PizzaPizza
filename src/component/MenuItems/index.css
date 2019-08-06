@@ -10,10 +10,17 @@
 .tabLinks {
     background-color: white;
 }
+.pizzaName{
+    color: black;
+    font-weight: bold;
+}
+.pizzaDetail{
+
+}
 
 .pizzaMenu {
     width: 100%;
-    border: solid #FFF7FB;
+    border-bottom: 1px solid #ddd;
     overflow: hidden;
     margin: 0 auto;
     padding-top: 10px;
@@ -29,24 +36,29 @@
     width: 130px;
 }
 
-.pizzaMenu div {
+.picArea{
     font-size: 15px;
-    font-weight: lighter;
     line-height: 20px;
     margin: auto;
 }
-
-.pizzaMenu div div {
+.textArea{
     color: #BCB6B9;
     font-weight: lighter;
     font-size: 15px;
     line-height: 20px;
+    /*position: relative;*/
 }
 
 .pizzaMenuPrice {
+    font-weight: bold;
+    color: #000;
     font-size: 15px;
-    font-weight: lighter;
-    /*padding-bottom: 20px;*/
+    float: bottom;
+
+    /*position: absolute;*/
+    /*bottom: 0px;*/
+    /*padding: 0px;*/
+    /*margin: 0px*/
 }
 
 
