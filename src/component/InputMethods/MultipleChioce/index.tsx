@@ -41,48 +41,57 @@ class MultipleChoice extends Component<IMultipleChoiceProps, IMultipleChoiceStat
   render() {
     const { data } = this.props;
     const { Panel } = Collapse;
-    const errorMessage=(itemError:number)=>
+    const errorMessage=(itemError:number, name:string)=>
     {if (!itemError) {
-        return '';
+        return (
+          <div>{name}</div>
+        );
       } else if (itemError === 1) {
-        return 'required';
+        return (
+          <div>{name} <span className={styles.errorMessage}>(Required)</span></div>
+        );
       } else if (itemError === 2) {
-        return 'too less';
+        return (
+          <div>{name} <span className={styles.errorMessage}>(Less than required)</span></div>
+        );
       } else if (itemError === 3) {
-        return 'too Many';
+        return (
+          <div>{name} <span className={styles.errorMessage}>(More than required)</span></div>
+        );
       }
-
     }
     return (
       <Fragment>
         <Collapse expandIconPosition={'right'} bordered={true}
-                  expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 180}/>}
+                  expandIcon={
+                    ({ isActive }) =>
+                    <Icon type="caret-right" rotate={isActive ? 90 : 180}/>
+                  }
                   defaultActiveKey={['1', '2']}
-                  className={styles.list}>
-          <Panel header={data.name + errorMessage(this.props.itemError)} key="1">
-
+                  className={styles.sizeOption}>
+          <Panel header={errorMessage(this.props.itemError, data.name)} key="1">
             {
               data.options.map((item: any, key: number) => {
                 return (
                   <div key={key}>
-                    <label>
+                    <label className={styles.font}>
                       <input type="checkbox"
                              value={JSON.stringify(item)}
                              id={item.id}
                              name={data.id}
                              onChange={this.handleChange.bind(this)}
-                      />{item.name}
+                             className={styles.formRadio}
+                      />
+                      {item.name}
                     </label>
-                    {/*{JSON.stringify(item)}*/}
+                    <div className={styles.sizeOptionPrice}>${item.price.toFixed(2)}</div>
+
                   </div>
                 );
               })
             }
-
           </Panel>
         </Collapse>
-
-
       </Fragment>
     );
   }

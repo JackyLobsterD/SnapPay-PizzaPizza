@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import styles from './index.css';
-import pizzaCombo from '@/assets/offlinePics/pizza-combo.png';
 import { isEmpty } from '@/utils/tools';
 
 
@@ -29,7 +28,8 @@ class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
                 !isEmpty(currentMenu)&& currentMenu.foodOptions.map((item: any, key: any) => {
                   return (
                     <div className={styles.pizzaMenu} key={key} onClick={()=>{this.props.callbackFunc(item.id, key)}}>
-                      <img src={pizzaCombo} alt={item.briefDetail.name}/>
+                      <img src={item.briefDetail.pic}
+                           alt={item.briefDetail.name}/>
                       <div>{item.briefDetail.name}</div>
                       <div>{item.briefDetail.desc}</div>
                       <div className={styles.pizzaMenuPrice}>${item.briefDetail.price}</div>

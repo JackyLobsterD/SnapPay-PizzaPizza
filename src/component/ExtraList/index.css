@@ -1,0 +1,24 @@
+.sizeOption {
+    width: 980px;
+    height: 100px;
+    border: solid #FFF7FB;
+    border-radius: 6px;
+    padding-right: 20px;
+    overflow: hidden;
+}
+
+.sizeOptionText {
+    font-size: 30px;
+    color: #BCB6B9;
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 120px;
+}
+
+.sizeOptionPrice {
+    font-size: 30px;
+    color: black;
+    display: inline-block;
+    margin-top: 15px;
+    float: right;
+}

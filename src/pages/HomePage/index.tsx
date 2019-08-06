@@ -5,6 +5,8 @@ import MenuItems from '@/component/MenuItems';
 import { isEmpty, getFromStorage } from '@/utils/tools';
 import router from 'umi/router';
 import { Button} from 'antd'
+import styles from './index.css';
+
 
 interface HomePageProps {
   restaurants: any;
@@ -67,10 +69,31 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
     }
     return (
       <Fragment>
-        <MenuTabs menuList={menuList} callbackFunc={this.tabOnClick}/>
-        <MenuItems currentMenu={currentMenu} callbackFunc={this.itemOnClick}/>
-        <Button onClick={this.goToCart.bind(this)}>go to Cart</Button>
-        <Button onClick={this.clearCart.bind(this)}>Clear</Button>
+        <div className={styles.background}>
+          <MenuTabs menuList={menuList} callbackFunc={this.tabOnClick}/>
+          <MenuItems currentMenu={currentMenu} callbackFunc={this.itemOnClick}/>
+          <div className={styles.footer}>
+            <div>Pizza Pizza Customer Service:</div>
+            <span>(604)-277-1111</span>
+            <div className={styles.marginTop}>Store Locations:</div>
+            <div className={styles.footerInfo}>Surrey: 2370 152 St, Surrey, BC V4A 4N9</div>
+            <div className={styles.footerInfo}>New Westminster: 527 6th St, New Westminster, BC V3L 3B9</div>
+            <div className={styles.footerInfo}>Burnaby: 4461 Lougheed Hwy #3, Burnaby, BC V5C 3Z2</div>
+            <div className={styles.marginTop}>Snappay Customer Service:</div>
+            <div className={styles.footerInfo}>1(888)-660-7729</div>
+            <div className={styles.copyright}>© 2019 Snappay Inc. All Rights Reserved.</div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <Button className={styles.viewCart} onClick={this.goToCart.bind(this)}>View Cart</Button>
 
 
       </Fragment>

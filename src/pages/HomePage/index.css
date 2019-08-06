@@ -1,0 +1,72 @@
+body {
+    overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    background: transparent;
+    height: 0;
+    width: 0;
+}
+
+.background {
+    background-color: white;
+    padding-top: 10px;
+}
+
+.viewCart {
+    width: 80%;
+    left: 10%;
+    height: 80px;
+    border: solid #ff7f00;
+    background-color: #ff7f00;
+    position: fixed;
+    bottom: 20px;
+    display: inline-block;
+    padding: 0;
+    font-family: Helvetica, serif;
+    font-size: 17px;
+    font-weight: lighter;
+    color: #FFF7FB;
+
+}
+
+.marginTop {
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 150px;
+    padding-bottom: 120px;
+    background-color: #eeeeee;
+    font-family: Helvetica, serif;
+    font-size: 14px;
+    font-weight: lighter;
+    line-height: 25px;
+    color: #222222;
+    width: 100%;
+    overflow: hidden;
+}
+
+.footer div {
+    margin-left: 20px;
+}
+
+.footerInfo {
+    color: #a5a0a2;
+}
+
+.footer span {
+    color: #00b1ed;
+    margin-left: 20px;
+}
+
+.copyright {
+    font-size: 10px;
+    font-weight: lighter;
+    margin-top: 30px;
+    color: #a5a0a2;
+    text-align: center;
+    vertical-align: middle;
+}
+
+

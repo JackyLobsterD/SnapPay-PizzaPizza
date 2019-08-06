@@ -15,12 +15,12 @@ class myLayouts extends React.Component <BasicLayoutProps> {
   render() {
     const { children } = this.props;
     return (
-      <Layout>
+      <Layout style={{backgroundColor:'white'}}>
         <div>
-          asdfasdf
         </div>
         {children}
-        <div>alskdjf;laskjdf</div>
+        <div>
+        </div>
       </Layout>
     );
   }

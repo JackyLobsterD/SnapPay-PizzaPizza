@@ -63,8 +63,37 @@ const pizzaSauceOption = {
   },
   'options': sauceOptions,
 };
+const pizzaSizeOption = (priceSmall: number, priceMedium: number, priceLarge: number) => {
+  return {
+    'id': 'size',
+    'name': 'size',
+    'type': 'single',
+    'rules': {
+      'required': true,
+    },
+    'options': [{
+      'id': 'small',
+      'name': 'Small',
+      'price': priceSmall,
+      'cal': '',
+    },
+      {
+        'id': 'medium',
+        'name': 'Medium',
+        'price': priceMedium,
+        'cal': '',
+      },
+      {
+        'id': 'large',
+        'name': 'Large',
+        'price': priceLarge,
+        'cal': '',
+      }],
+  };
+};
+const pizza_staples_pic_url = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/pics/hello/12700.png';
 
-const pizza_staples_pic_url= 'staples.jpg';
+
 const pizza_staples = {
   'id': 'theStaples',
   'briefDetail': {
@@ -75,26 +104,24 @@ const pizza_staples = {
     'price': 14.49,
   },
   'options': [
-    {
-      'id': 'size',
-      'name': 'size',
-      'type': 'single',
-      'rules': {
-        'required': true,
-      },
-      'options': [{
-        'id': 'small',
-        'name': 'Small',
-        'price': 0,
-        'cal': '',
-      },
-        {
-          'id': 'medium',
-          'name': 'Medium',
-          'price': 2,
-          'cal': '',
-        }],
-    },
+    pizzaSizeOption(0, 2, 4),
+    pizzaSauceOption,
+    pizzaDrinkOption,
+  ],
+};
+const pizza_mushroom_pic_url = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/pics/hello/13920.png';
+
+const pizza_mushroom = {
+  'id': 'theStaples',
+  'briefDetail': {
+    'pic': pizza_mushroom_pic_url,
+    'name': 'The Staples',
+    'desc': 'mushroom chicken',
+    'cal': '200-270 Cal/slice',
+    'price': 14.49,
+  },
+  'options': [
+    pizzaSizeOption(0, 2, 4),
     pizzaSauceOption,
     pizzaDrinkOption,
   ],
@@ -109,69 +136,14 @@ export const pizzaPizzaTemplate = {
           'category': 'Popular',
           'foodOptions': [
             pizza_staples,
-            {
-              'id': 'megaMunch',
-              'briefDetail': {
-                'name': 'Mega Munch',
-                'desc': 'Large Pizza + 3 Toppings + 10 Pcs Wings + 4 Coke + 2 Dips',
-                'price': 99.99,
-              },
-            },
-            {
-              'id': 'Example',
-              'briefDetail': {
-                'name': 'Mega Munch',
-                'desc': 'Large Pizza + 3 Toppings + 10 Pcs Wings + 4 Coke + 2 Dips',
-                'price': '$25.99',
-              },
-            },
+            pizza_mushroom
           ],
         },
         {
           'category': 'Pizza',
           'foodOptions': [
-            {
-              'id': 'buffaloChicken',
-              'briefDetail': {
-                'pic': 'BChicken.jpg',
-                'name': 'The B',
-                'desc': '1 Mediums + 1 Dipping Sauce',
-                'price': '$12.99',
-              },
-              'details': {
-                'title': 'Buffalo Chicken (Hot N Spicy Chicken)',
-                'desc': 'Made with our Buffalo Blue Cheese sauce, grilled chicken, red onions and fire roasted red peppers',
-                'cals': '220-260',
-                'options': [
-                  {
-                    'title': 'Size of Pizza',
-                    'type': 'radio',
-                    'options': [
-                      {
-                        'name': 'Small',
-                        'cal': '220',
-                        'price': '12.99',
-                      },
-                      {
-                        'name': 'Medium',
-                        'cal': '230',
-                        'price': '14.99',
-                      },
-                      {
-                        'name': 'Large',
-                        'cal': '260',
-                        'price': '17.99',
-                      },
-                      {
-                        'name': 'X-Large',
-                        'cal': '280',
-                        'price': '20.99',
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
+            pizza_staples,
+            pizza_mushroom
           ],
         },
         {

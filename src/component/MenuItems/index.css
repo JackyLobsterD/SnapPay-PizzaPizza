@@ -1,6 +1,6 @@
 .tabContent {
     display: block;
-    padding: 6px 12px;
+    /*padding: 6px 12px;*/
     border: 1px solid white;
     border-top: none;
     font-size: 50px;
@@ -12,34 +12,41 @@
 }
 
 .pizzaMenu {
-    width: auto;
+    width: 100%;
     border: solid #FFF7FB;
-    border-radius: 6px;
     overflow: hidden;
     margin: 0 auto;
+    padding-top: 10px;
+    font-family: Helvetica, serif;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    background-color: white;
 }
 
 .pizzaMenu img {
     float: left;
-    margin: 20px 0 10px 10px;
-    width: 80px;
+    margin: 10px 10px 20px 10px;
+    width: 130px;
 }
 
 .pizzaMenu div {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: lighter;
-    line-height: 30px;
-    padding-top: 15px;
+    line-height: 20px;
+    margin: auto;
 }
 
 .pizzaMenu div div {
     color: #BCB6B9;
     font-weight: lighter;
-    font-size: 13px;
+    font-size: 15px;
+    line-height: 20px;
 }
 
 .pizzaMenuPrice {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: lighter;
-    padding-bottom: 40px;
+    /*padding-bottom: 20px;*/
 }
+
+

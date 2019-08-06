@@ -45,7 +45,7 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
         <Collapse expandIconPosition={'right'} bordered={true}
                   expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 180}/>}
                   defaultActiveKey={['1', '2']}
-                  className={styles.list}>
+                  className={styles.sizeOption}>
           <Panel header={data.name} key="1">
             {data.options.map((item: any, key: number) => {
               return (
@@ -56,8 +56,10 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
                          key={key}
                          onChange={this.handleChange.bind(this)}
                          checked={item.id === this.state.selectedID}
-                         />
-                  <label htmlFor={item.id}>{JSON.stringify(item)}</label>
+                         className={styles.formRadio}
+                  />
+                  <label htmlFor={item.id}>{item.name} </label>
+                  <div className={styles.sizeOptionPrice}>${item.price.toFixed(2)}</div>
                 </div>
               );
             })}

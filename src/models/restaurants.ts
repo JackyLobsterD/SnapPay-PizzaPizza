@@ -7,6 +7,7 @@ export default {
     pizzaPizzaTemplate: {},
     currentItemDetails: {},
     cartList: [],
+    newCartList:[]
   },
   reducers: {
     savePizzaPizzaTemplate: (state: any, { payload }: any) => {
@@ -26,7 +27,8 @@ export default {
 
     saveToCartList: (state: any, { payload }: any) => {
       let cartList = [];
-      if (!payload || isEmpty(payload) || !getFromStorage('cartList')) {
+      console.log(payload);
+      if (!payload || isEmpty(payload)) {
         saveToStorage('cartList', []);
       } else {
         if (!getFromStorage('cartList')) saveToStorage('cartList', []);
@@ -40,7 +42,11 @@ export default {
       };
     },
     saveToNewCartList: (state: any, { payload }: any) => {
-
+      saveToStorage('cartList', payload);
+      return {
+        ...state,
+        newCartList:payload,
+      };
     }
   },
   effects: {
@@ -59,7 +65,6 @@ export default {
     },
     * fetchNewCartList({ payload }: any, { call, put }: any) {
       yield put({ type: 'saveToNewCartList', payload: payload });
-
     }
   },
 };

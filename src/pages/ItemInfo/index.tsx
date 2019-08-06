@@ -5,6 +5,7 @@ import BriefDetail from '@/component/briefDetail';
 import ExtraList from '@/component/ExtraList';
 import { Button, Select } from 'antd';
 import router from 'umi/router';
+import styles from './index.css';
 
 interface HomePageProps {
   restaurants: any;
@@ -60,6 +61,7 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
       console.log(222);
       const newItemWithQuantity = Object.assign({}, newItem, { quantity });
       this.props.dispatch({ type: 'restaurants/fetchCartList', payload: newItemWithQuantity });
+      console.log(newItemWithQuantity);
       router.goBack();
     }else{
       this.setState({extraListError})
@@ -72,10 +74,22 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
     this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
   }
 
-  handleQuantityChange(value: number) {
+  increaseValue() {
     this.setState({
-      quantity: value,
+      quantity: this.state.quantity+1,
     });
+  }
+
+  decreaseValue() {
+    if(this.state.quantity>1){
+      this.setState({
+        quantity: this.state.quantity - 1,
+      });
+    }
+  }
+
+  goBack() {
+    router.goBack()
   }
 
   render() {
@@ -86,26 +100,39 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
     // console.log(currentItemDetails);
     return (
       <Fragment>
+        <div className={styles.background}>
+          <div className={styles.headerCanvas}>
+            <div className={styles.headerCanvasBackButton} onClick={() => this.goBack()}>&lt;&nbsp;Back</div>
+
+            <div className={styles.headerCanvasTitle}>
+            </div>
+          </div>
+
         <BriefDetail briefDetailData={briefDetail}/>
         <ExtraList options={options} callbackFunc={this.getExtraList.bind(this)} extraListError={this.state.extraListError}/>
 
-
-        <Select defaultValue={1} onChange={this.handleQuantityChange.bind(this)}>
-          {quantityCombo.map((item, key) => {
-            return (
-              <Option value={item} key={key}>{item}</Option>
-            );
-          })}
-        </Select>
+          <form className={styles.quantity}>
+            <div className={styles.valueButton} onClick={()=>this.decreaseValue()}>-
+            </div>
+            <div className={styles.valueNumber}>
+              {this.state.quantity}
+            </div>
+            <div className={styles.valueButton} onClick={()=>this.increaseValue()}>+
+            </div>
+          </form>
         <br/>
-        <div>
-          <Button onClick={this.addToCart.bind(this)}>add to cart</Button>
-        </div>
-        <div>
-          <Button onClick={this.clearCart.bind(this)}>clear</Button>
-        </div>
-        <div>
-          <Button onClick={this.clearCart.bind(this)}>go back</Button>
+          <div>
+            <Button onClick={this.addToCart.bind(this)} className={styles.addCart}>Add To Cart</Button>
+          </div>
+        {/*<div>*/}
+        {/*  <Button onClick={this.addToCart.bind(this)}>add to cart</Button>*/}
+        {/*</div>*/}
+        {/*<div>*/}
+        {/*  <Button onClick={this.clearCart.bind(this)}>clear</Button>*/}
+        {/*</div>*/}
+        {/*<div>*/}
+        {/*  <Button onClick={this.clearCart.bind(this)}>go back</Button>*/}
+        {/*</div>*/}
         </div>
       </Fragment>
     );
