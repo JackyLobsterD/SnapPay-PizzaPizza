@@ -42,10 +42,11 @@ class ExtraList extends Component<IExtraListProps, IExtraListStates> {
 
   render() {
     const { options } = this.props;
+    console.log(options);
     return (
       <Fragment>
         {
-          options.map((item, key) => {
+          options&&options.map((item, key) => {
             if (item.type === 'single') {
               return (
                 <SingleChoice data={item} callBackFunc={this.getSingleChoice.bind(this)} catIndex={key} key={key}/>);

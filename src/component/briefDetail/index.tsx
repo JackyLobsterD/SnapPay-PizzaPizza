@@ -8,6 +8,9 @@ interface IMenuTabsProps {
 interface IMenuTabsStates {
 }
 
+const awsS3baseUrl = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/pics/menuPics/'
+
+
 class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
   constructor(props: any) {
     super(props);
@@ -18,7 +21,7 @@ class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
     return briefDetailData?(
       <Fragment>
         <div className={styles.picArea}>
-          <img className={styles.pizzaImage} src={briefDetailData.pic} alt={briefDetailData.name}/>
+          <img className={styles.pizzaImage} src={awsS3baseUrl+briefDetailData.pic} alt={briefDetailData.name}/>
         </div>
         <div className={styles.textArea}>
           <div className={styles.textAreaInner}>

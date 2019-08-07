@@ -37,15 +37,22 @@
 }
 
 .picArea{
+    display: inline-block;
     font-size: 15px;
     line-height: 20px;
     margin: auto;
+    height: 100%;
+    width: 40%;
+    vertical-align: top;
+    text-align: center;
 }
 .textArea{
+    display: inline-block;
     color: #BCB6B9;
     font-weight: lighter;
     font-size: 15px;
     line-height: 20px;
+    width: 60%;
     /*position: relative;*/
 }
 
