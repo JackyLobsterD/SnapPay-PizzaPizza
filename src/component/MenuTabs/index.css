@@ -1,8 +1,6 @@
 .tab {
     overflow: scroll;
     white-space: nowrap;
-    border: 1px solid white;
-    background-color: white;
 }
 
 ::-webkit-scrollbar {
@@ -11,39 +9,12 @@
     width: 0;
 }
 
-.tab button {
+.tab div {
     border: none;
-    border-radius: 70px;
-    outline: none;
-    padding: 15px;
-    /*transition: 0.1s;*/
-    font-size: 15px;
-    font-weight: lighter;
+    border-radius: 7px;
+    padding: 1rem;
+    font-size: 1rem;
+    color: black;
     display: inline-block;
-    background-color: white;
-    overflow: hidden;
-    width: 25%;
     transition: all 0.2s ease-in-out;
 }
-
-.tab button:hover {
-    background-color: black;
-    color: white;
-    /*transition-duration:0.6s;
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0s;
-    animation-direction: normal;
-    animation-fill-mode: forwards;
-    animation-play-state: revert;*/
-}
-
-
-.slide {
-    position: absolute;
-    background: black;
-    z-index: -1;
-    transition: 0.5s;
-}
-
-

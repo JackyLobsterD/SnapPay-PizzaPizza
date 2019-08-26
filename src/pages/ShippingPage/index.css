@@ -15,7 +15,7 @@ form {
 
 .headerCanvasTitle {
     font-size: 20px;
-    font-weight: lighter;
+    font-weight: 400;
     text-align: center;
     line-height: 70px;
     vertical-align: center;
@@ -24,10 +24,11 @@ form {
 }
 
 .headerCanvasBack {
-    float: left;
-    font-size: 20px;
-    font-weight: lighter;
-    margin-left: 20px;
+  float: left;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: white;
+  border: transparent;
 }
 
 
@@ -49,20 +50,19 @@ form {
 .tableStyle td {
     text-align: left;
     height: 40px;
-    font-size: 18px;
-    padding-left: 20px;
+    font-size: 15px;
+    padding: 10px 20px 10px 15px;
 }
 
 .tableStyle tr {
-    border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
 }
 
 .enterTitle {
-
     display: inline-block;
-    font-size: 24px;
+    font-size: 17px;
     padding: 15px 0 15px 10px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .leftCell {
@@ -70,12 +70,16 @@ form {
     padding: 20px 0;
 }
 
+input::placeholder{
+  color: #a49fa1;
+}
+
 input {
     font-size: 16px;
     font-weight: lighter;
     outline: none;
     border: none;
-    color: #a49fa1;
+    color: #636061;
 }
 
 .storeOption {
@@ -178,24 +182,35 @@ textarea {
 }
 
 .cancel {
-    height: 60px;
-    width: 37%;
-    float: left;
-    border: 1px solid #5f5c5d;
-    border-radius: 6px;
-    background-color: white;
-    display: inline-block;
-    font-size: 20px;
+  height: 50px;
+  width: 45%;
+  float: left;
+  border: 1px solid #5f5c5d;
+  border-radius: 6px;
+  background-color: white;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 300;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 
 .next {
-    height: 60px;
-    width: 60%;
-    float: right;
-    border: 1px solid #ff7f00;
-    border-radius: 6px;
-    background-color: #ff7f00;
-    display: inline-block;
-    font-size: 20px;
-    color: #FFF7FB;
+  width: 100%;
+  height: 50px;
+  border: solid #ff7f00;
+  background-color: #ff7f00;
+  font-family: Helvetica, serif;
+  font-size: 17px;
+  font-weight: 300;
+  color: #FFF7FB;
+  bottom: 0;
+  position: fixed;
+  padding: 0;
+  left: 0;
+}
+
+.icon{
+  width: 50px;
+  height: 50px;
 }

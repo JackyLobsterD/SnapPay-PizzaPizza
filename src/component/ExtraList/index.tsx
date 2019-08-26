@@ -42,7 +42,6 @@ class ExtraList extends Component<IExtraListProps, IExtraListStates> {
 
   render() {
     const { options } = this.props;
-    console.log(options);
     return (
       <Fragment>
         {

@@ -39,6 +39,17 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
   render() {
     const { data } = this.props;
     const { Panel } = Collapse;
+    const errorMessage=(itemError:number, name:string)=>
+    {if (!itemError) {
+      return (
+        <div>{name}</div>
+      );
+    } else if (itemError === 0) {
+      return (
+        <div>{name} <span className={styles.errorMessage}>(Required)</span></div>
+      );
+    }
+    };
     return (
       <Fragment>
 
@@ -59,7 +70,7 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
                          className={styles.formRadio}
                   />
                   <label htmlFor={item.id}>{item.name} </label>
-                  <div className={styles.sizeOptionPrice}>${item.price.toFixed(2)}</div>
+                  <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
                 </div>
               );
             })}

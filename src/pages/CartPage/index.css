@@ -1,7 +1,6 @@
 
 .background {
     background-color: white;
-
     width: 90%;
     margin: 0 5%;
 }
@@ -19,7 +18,7 @@ form {
 
 .headerCanvasTitle {
     font-size: 20px;
-    font-weight: lighter;
+    font-weight: 400;
     text-align: center;
     line-height: 70px;
     vertical-align: center;
@@ -28,20 +27,22 @@ form {
 }
 
 .headerCanvasBackButton {
-    float: left;
-    font-size: 20px;
-    margin-left: 20px;
-    line-height: 70px;
-    vertical-align: middle;
-    color: #888888;
+  float: left;
+  font-size: 20px;
+  margin-left: 10px;
+  line-height: 70px;
+  vertical-align: middle;
+  color: black;
+  font-weight: 400;
 }
 
 
 .subheader {
-    font-size: 18px;
-    font-weight: lighter;
-    float: left;
-    margin: 30px 0 10px 20px;
+  font-size: 16px;
+  font-weight: lighter;
+  float: left;
+  margin: 20px 0 10px 20px;
+  color: black;
 }
 
 .label {
@@ -62,7 +63,6 @@ form {
     float: left;
     margin-right: 10px;
     vertical-align: middle;
-
 }
 
 .textarea {
@@ -70,9 +70,18 @@ form {
     font-size: 16px;
     width: 100%;
     height: 60px;
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
     padding-left: 20px;
 }
+
+.textarea::placeholder{
+  color: #bfbfbf;
+}
+
+.textarea:focus{
+  color: #575455;
+}
+
 
 .divider {
     margin-top: 20px;
@@ -87,7 +96,7 @@ form {
 .highlightBlue {
     font-size: 16px;
     font-weight: lighter;
-    color: #00b1ed;
+    color: black;
     float: right;
     margin-right: 10px;
     vertical-align: middle;
@@ -107,51 +116,82 @@ form {
     margin-top: 15px;
 }
 
+.completeTotal {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+  color: black;
+  margin-top: 20px;
+}
+
+.completeTotalPrice{
+  font-size: 16px;
+  font-weight: bold;
+  float: right;
+  margin-right: 10px;
+  display: inline;
+  color: black;
+}
+
 .total {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 30px;
+  font-size: 16px;
+  font-weight: lighter;
+  line-height: 30px;
 }
 
 .totalPrice {
-    font-size: 16px;
-    font-weight: bold;
-    float: right;
-    margin-right: 10px;
-    display: inline;
+  font-size: 16px;
+  font-weight: lighter;
+  float: right;
+  margin-right: 10px;
+  display: inline;
+  color: black;
 }
 
 .cancel {
-    height: 60px;
-    width: 37%;
-    float: left;
-    border: 1px solid #5f5c5d;
-    border-radius: 6px;
-    background-color: white;
-    display: inline-block;
-    font-size: 20px;
+  height: 45px;
+  width: 47%;
+  float: left;
+  border: 1px solid #5f5c5d;
+  border-radius: 6px;
+  background-color: white;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 300;
+  position: fixed;
+  bottom: 10px;
+  padding: 0;
+  margin-left: 0;
 }
 
 .next {
-    height: 60px;
-    width: 60%;
-    float: right;
-    border: 1px solid #ff7f00;
-    border-radius: 6px;
-    background-color: #ff7f00;
-    display: inline-block;
-    font-size: 20px;
-    color: #FFF7FB;
+  height: 45px;
+  width: 47%;
+  float: right;
+  border: 1px solid #ff7f00;
+  border-radius: 6px;
+  background-color: #ff7f00;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 300;
+  color: #FFF7FB;
+  position: fixed;
+  bottom: 10px;
+  margin-left: 200px;
 }
 
 .inline {
     width: 90%;
-    margin: 50px 5% 0 5%;
+    margin: 50px 5% 0 10px;
 }
 
 
 .tableStyle {
     width: 100%;
+}
+
+table tr td {
+  margin-bottom: 50px;
 }
 
 .leftCell {
@@ -160,7 +200,6 @@ form {
 
 .rightCell {
     width: 30%;
-
 }
 
 .separateLine {
@@ -169,6 +208,7 @@ form {
     margin: 10px 0;
 }
 
+
 .summaryArea {
     width: 90%;
     margin: 0 5%;
@@ -176,5 +216,30 @@ form {
 
 
 .notesText{
-    font-size: 16px;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.tipsButton{
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+  border-radius: 50%;
+  font-size: 30px;
+  font-weight: lighter;
+  vertical-align: center;
+  background-color: black;
+  color: white;
+  margin: 20px 20px 30px 40px;
+}
+
+.tipsDetail{
+  font-size: 16px;
+  font-weight: lighter;
+  line-height: 30px;
+  color: black;
+  margin-top: 10px;
+  margin-left: 20px;
 }

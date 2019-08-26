@@ -48,18 +48,18 @@ class MultipleChoice extends Component<IMultipleChoiceProps, IMultipleChoiceStat
         );
       } else if (itemError === 1) {
         return (
-          <div>{name} <span className={styles.errorMessage}>(Required)</span></div>
+          <div>{name} <span className={styles.errorMessage}>(Required 2)</span></div>
         );
       } else if (itemError === 2) {
         return (
-          <div>{name} <span className={styles.errorMessage}>(Less than required)</span></div>
+          <div>{name} <span className={styles.errorMessage}>(Required 2)</span></div>
         );
       } else if (itemError === 3) {
         return (
-          <div>{name} <span className={styles.errorMessage}>(More than required)</span></div>
+          <div>{name} <span className={styles.errorMessage}>(Too Many Selected)</span></div>
         );
       }
-    }
+    };
     return (
       <Fragment>
         <Collapse expandIconPosition={'right'} bordered={true}
@@ -84,7 +84,7 @@ class MultipleChoice extends Component<IMultipleChoiceProps, IMultipleChoiceStat
                       />
                       {item.name}
                     </label>
-                    <div className={styles.sizeOptionPrice}>${item.price.toFixed(2)}</div>
+                    <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
 
                   </div>
                 );

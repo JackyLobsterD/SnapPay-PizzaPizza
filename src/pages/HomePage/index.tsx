@@ -19,6 +19,8 @@ interface HomePageStates {
   menuItemTitle: string;
   menuItemTitleIndex: number;
   currentMenu: any;
+  visible: boolean,
+  displayCart: true
 }
 
 
@@ -30,7 +32,30 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
       menuItemTitle: '',
       menuItemTitleIndex: 0,
       currentMenu: {},
+      visible: false,
+      displayCart: true,
     };
+    // this.handleChange = this.handleChange.bind(this);
+
+
+    /*this.showCartInstance = (
+      <div onClick={this.handleChange}>
+        <Button className={styles.viewCart} onClick={this.goToCart.bind(this)} >View Cart</Button>
+      </div>
+    )*/
+  }
+
+/*  toggleBtn = () =>{
+    const {displayCart} = this.state;
+    this.setState({
+      displayCart: !displayCart
+    })
+  }*/
+
+  handleChange(event:any){
+    this.setState({
+      visible: true
+    })
   }
 
   tabOnClick = (menuItemTitle: string, menuItemTitleIndex: number) => {
@@ -40,7 +65,7 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
 
 
     const currentMenu = pizzaPizzaTemplate.data.menuPage.details[menuItemTitleIndex];
-    this.setState({ menuItemTitle, menuItemTitleIndex, currentMenu });
+    this.setState({ menuItemTitle, menuItemTitleIndex, currentMenu});
   };
 
   itemOnClick = (itemId: string, itemIndex:number) => {
@@ -51,16 +76,40 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
 
   };
 
+  showCart = () => {
+    this.setState({
+      visible: true
+    });
+    if(this.goToCart() === null){
+      styles.viewCart.display = "none";
+    }
+  };
+
+
+
+
+
   clearCart() {
     this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
   }
 
   goToCart(){
-    router.push('/CartPage')
+    let cartList= getFromStorage('cartList')
+    if (!cartList||!cartList[0]){
+      alert('No item in cart')
+    } else{
+      router.push('/CartPage')
+    }
   }
+
   render() {
     const { pizzaPizzaTemplate } = this.props.restaurants;
     const { currentMenu } = this.state;
+    console.log(getFromStorage('cartList'))
+    console.log(this.state.visible )
+    if(!isEmpty(getFromStorage('cartList'))&&!this.state.visible){
+      this.setState({visible:true})
+    }
     let menuList = [];
     if (!isEmpty(pizzaPizzaTemplate)) {
       menuList = pizzaPizzaTemplate.data.menuPage.details.map((item: any) => {
@@ -85,15 +134,7 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
           </div>
         </div>
 
-
-
-
-
-
-
-
-
-        <Button className={styles.viewCart} onClick={this.goToCart.bind(this)}>View Cart</Button>
+        {this.state.visible&&<Button className={styles.viewCart} onClick={this.goToCart.bind(this)} >View Cart</Button>}
 
 
       </Fragment>

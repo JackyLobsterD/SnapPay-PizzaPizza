@@ -79,7 +79,7 @@ const pizzaDrinkOption = {
   'name': drinkName,
   'type': 'multiple',
   'rules': {
-    'required': true,
+    'required': false,
     'minNum': 1,
     'maxNum': 2,
   },
@@ -185,7 +185,7 @@ const pizzaSauceOption = {
 const sizeOption = (smallPrice: number, mediumPrice: number, largePrice: number, xlPrice: number) => {
   return {
     'id': 'size',
-    'name': 'Size of Pizza',
+    'name': 'Size of Pizza (Required)',
     'type': 'single',
     'rules': {
       'required': true,
@@ -298,7 +298,7 @@ export const pizzaPizzaTemplate = {
                 'price': 11.99,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4.6, 8.2),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -312,7 +312,7 @@ export const pizzaPizzaTemplate = {
                 'price': 12.99,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4.5, 8),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -326,7 +326,7 @@ export const pizzaPizzaTemplate = {
                 'price': 8.99,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4, 8),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -354,7 +354,7 @@ export const pizzaPizzaTemplate = {
                 'price': 11.99,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4.5, 8),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -368,7 +368,7 @@ export const pizzaPizzaTemplate = {
                 'price': 10.49,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4.5, 8),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -382,7 +382,7 @@ export const pizzaPizzaTemplate = {
                 'price': 14.99,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2.3, 5.5, 9.5),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -396,7 +396,7 @@ export const pizzaPizzaTemplate = {
                 'price': 11.49,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4, 7.5),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -410,7 +410,7 @@ export const pizzaPizzaTemplate = {
                 'price': 10.49,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 4.5, 8),
               ],
             },
             {
@@ -422,7 +422,7 @@ export const pizzaPizzaTemplate = {
                 'price': 13.49,
               },
               'options': [
-                sizeOption(0, 2, 4.5, 8.1),
+                sizeOption(0, 2, 5, 9),
                 pizzaSauceOption,
                 pizzaDrinkOption,
               ],
@@ -485,7 +485,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'chickenBitesTwenty',
               'briefDetail': {
-                'pic': 'wings20Bites.png',
+                'pic': 'wings20BItes.png',
                 'name': 'Chicken Bites (20 pc)',
                 'desc': 'Boneless chunks of 100% white breast meat, raised without antibiotics and sourced from Canadian farms.',
                 'price': 19.49,
@@ -511,7 +511,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'baconCaesar',
               'briefDetail': {
-                'pic': 'saladBaconChickenCeasar.png',
+                'pic': 'saladBaconChickenCaesar.png',
                 'name': 'Bacon Chicken Caesar',
                 'desc': 'Fresh crisp romaine lettuce, bacon strips, parmesan cheese, and croutons. Comes with a salad dressing of your choice.',
                 'price': 6.99,
@@ -776,7 +776,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'cokeClassic',
               'briefDetail': {
-                'pic': 'drinksCoke.png',
+                'pic': 'drinksCoke.jpg',
                 'name': 'Coca Cola Classic',
                 'desc': '355ml Can',
                 'price': 1.29,
@@ -786,7 +786,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'cokeZero',
               'briefDetail': {
-                'pic': 'drinksCokeZero.png',
+                'pic': 'drinksCokeZero.jpg',
                 'name': 'Coca Cola Zero',
                 'desc': '355ml Can',
                 'price': 1.29,
@@ -816,7 +816,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'barqCreamSoda',
               'briefDetail': {
-                'pic': 'drinksBarqCreamSoda.png',
+                'pic': 'drinksBarqCreamSoda.jpg',
                 'name': 'Barq Cream Soda',
                 'desc': 'Can',
                 'price': 1.29,
@@ -911,7 +911,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'blueCheese',
               'briefDetail': {
-                'pic': 'dippingBlueCheese.png',
+                'pic': 'dippingBlueCheese.jpg',
                 'name': 'Blue Cheese',
                 'desc': '',
                 'price': 0.89,
@@ -921,7 +921,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'buffaloBlueCheese',
               'briefDetail': {
-                'pic': 'dippingBuffaloBlueCheese.png',
+                'pic': 'dippingBlueCheese.jpg',
                 'name': 'Buffalo Blue Cheese',
                 'desc': '',
                 'price': 0.89,
@@ -931,7 +931,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'cheddarJalapeno',
               'briefDetail': {
-                'pic': 'dippingCheddarJalapeno.png',
+                'pic': 'dippingCheddarJalapeno.jpg',
                 'name': 'Cheddar Jalapeno',
                 'desc': '',
                 'price': 0.89,
@@ -941,7 +941,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'creamyDill',
               'briefDetail': {
-                'pic': 'dippingCreamyDill.png',
+                'pic': 'dippingCreamyGarlic.jpg',
                 'name': 'Creamy Dill',
                 'desc': '',
                 'price': 0.89,
@@ -951,7 +951,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'honeyGarlic',
               'briefDetail': {
-                'pic': 'dippingHoneyGarlic.png',
+                'pic': 'dippingHoneyGarlic.jpg',
                 'name': 'Honey Garlic',
                 'desc': '',
                 'price': 0.89,
@@ -961,7 +961,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'creamyGarlic',
               'briefDetail': {
-                'pic': 'dippingCreamyGarlic.png',
+                'pic': 'dippingCreamyGarlic.jpg',
                 'name': 'Creamy Garlic',
                 'desc': '',
                 'price': 0.89,
@@ -971,7 +971,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'hot',
               'briefDetail': {
-                'pic': 'dippingFranksRedHot.png',
+                'pic': 'dippingFranksRedHot.jpg',
                 'name': 'Franks Red Hot Sauce',
                 'desc': '',
                 'price': 0.89,
@@ -981,7 +981,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'marinara',
               'briefDetail': {
-                'pic': 'dippingMarinera.png',
+                'pic': 'dippingMarinera.jpg',
                 'name': 'Italian Marinara',
                 'desc': '',
                 'price': 0.89,
@@ -991,7 +991,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'mild',
               'briefDetail': {
-                'pic': 'dippingCreamyGarlic.png',
+                'pic': 'dippingCreamyGarlic.jpg',
                 'name': 'Mild Sauce',
                 'desc': '',
                 'price': 0.89,
@@ -1001,7 +1001,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'ranch',
               'briefDetail': {
-                'pic': 'dippingPeppercornRanch.png',
+                'pic': 'dippingPeppercornRanch.jpg',
                 'name': 'Peppercorn Ranch',
                 'desc': '',
                 'price': 0.89,
@@ -1011,7 +1011,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'srirachaGarlic',
               'briefDetail': {
-                'pic': 'dippingSrirachaCreamyGarlic.png',
+                'pic': 'dippingSrirachaCreamyGarlic.jpg',
                 'name': 'Sriracha Creamy Garlic',
                 'desc': '',
                 'price': 0.89,
@@ -1021,7 +1021,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'sweetChili',
               'briefDetail': {
-                'pic': 'dippingSweetChiliThai.png',
+                'pic': 'dippingSweetChiliThai.jpg',
                 'name': 'Sweet Chili Thai Sauce',
                 'desc': '',
                 'price': 0.89,
@@ -1031,7 +1031,7 @@ export const pizzaPizzaTemplate = {
             {
               'id': 'bbq',
               'briefDetail': {
-                'pic': 'dippingFranksRedHot.png',
+                'pic': 'dippingFranksRedHot.jpg',
                 'name': 'Texas BBQ (Contains Gluten)',
                 'desc': '',
                 'price': 0.89,
