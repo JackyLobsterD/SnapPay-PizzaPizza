@@ -26,9 +26,6 @@ body {
     color: #FFF7FB;
 }
 
-.marginTop {
-    margin-top: 20px;
-}
 
 .footer {
     margin-top: 20px;
@@ -56,8 +53,13 @@ body {
 .footer span {
     color: #00b1ed;
     margin-left: 20px;
+    font-size: 1.4rem;
 }
 
+.footerTitle{
+    margin-top: 1.2rem;
+    margin-bottom: 0.4rem;
+}
 .copyright {
     font-size: 10px;
     font-weight: lighter;

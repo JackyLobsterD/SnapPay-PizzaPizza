@@ -26,7 +26,9 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
   constructor(props: any) {
     super(props);
     const currentItemDetails = getFromStorage('currentItemDetails');
-    this.state = { currentItemDetails, newItem: {}, quantity: 1, extraListError: {}};
+    const newItem = Object.assign({}, currentItemDetails);
+
+    this.state = { currentItemDetails, newItem, quantity: 1, extraListError: {}};
   }
 
   getExtraList(value: any) {
@@ -66,10 +68,6 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
     }
   }
 
-  clearCart() {
-    this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
-  }
-
   increaseValue() {
     this.setState({
       quantity: this.state.quantity+1,
@@ -89,6 +87,7 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
   }
 
   render() {
+    console.log(this.state.newItem);
     const { currentItemDetails } = this.state;
     const { briefDetail, options } = currentItemDetails;
     return (

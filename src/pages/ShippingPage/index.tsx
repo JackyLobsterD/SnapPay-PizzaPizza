@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'dva';
-import { Button, Icon, Modal, Select } from 'antd';
+import { Button, Col, Icon, Modal, Row, Select } from 'antd';
 import styles from './index.css';
 // @ts-ignore
 import geocoder from 'google-geocoder';
@@ -38,24 +38,26 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
   constructor(props: any) {
     super(props);
     let cartListString = '';
+    console.log(getFromStorage('newCartList'));
     for (let [key, value] of Object.entries(getFromStorage('newCartList'))) {
       for (let [key2, value2] of Object.entries(value)) {
-        if (key2 !== 'options') {
-          cartListString += key2 + '%' + value2 + '@/';
+        if (key2 === 'name') {
+          cartListString += value2 + ' x' + value.quantity + '%' + '$' + (value.basePrice * value.quantity ).toFixed(2)+ '*/';
+        } else if (key2 === 'basePrice' || key2 === 'quantity') {
+
+        } else if (key2 === 'itemTotalPrice') {
+          cartListString += '小计' + '%' + '$' + (value2 * value.quantity).toFixed(2) + '@/';
+        } else if (key2 !== 'options') {
+          cartListString += key2 + '%' + value2 + '*/';
         } else {
-          //option:
-          cartListString += key2 + '`/';
           let optionValueString = '';
           value2.forEach((optionItem: any) => {
-            //sauce:
-            optionValueString += optionItem.name + '~/';
             optionItem.options.forEach((optionItemOptions: any) => {
               //honey mustered    0.99
-              optionValueString += optionItemOptions.name + '%' + optionItemOptions.price + '*/';
+              optionValueString += optionItemOptions.name + ' x' + value.quantity + '%' + '+$' + (optionItemOptions.price * value.quantity).toFixed(2) + '*/';
             });
-            // optionValueString += '^/';
           });
-          cartListString += optionValueString + '@/';
+          cartListString += optionValueString;
         }
       }
       cartListString += '!/';
@@ -63,30 +65,28 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
     console.log(cartListString);
     let cartList = cartListString;
 
-    for (let i=0; i<50; i++) {
+    for (let i = 0; i < 50; i++) {
       let midNum1 = cartList.indexOf('/');
       let midNum2 = midNum1 - 1;
       let midNum3 = midNum1 + 1;
 
 
-
       let endNum = cartList.length;
-      let mark= cartList.substring(midNum2, midNum1)
+      let mark = cartList.substring(midNum2, midNum1);
       let val = cartList.substring(0, midNum2);
       cartList = cartList.substring(midNum3, endNum);
-      if (mark==='%'){
-        console.log('%%%%'+val);
+      if (mark === '%') {
+        console.log('%%%%' + val);
       } else if (mark === '$') {
         console.log('$$$$' + val);
       } else if (mark === '#') {
         console.log('----------');
         console.log('$$$$' + val);
-      }
-      else {
+      } else {
         console.log(val);
       }
       console.log(mark);
-      if (cartList===''){
+      if (cartList === '') {
         break;
       }
     }
@@ -119,10 +119,82 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
     router.goBack();
   }
 
-  goPay() {
-    if (!isOpen()) {
-      alert('store is closed');
+  storeClosedMessage() {
+    Modal.error({
+      title: 'Sorry, store is closed',
+      content: (
+        <div>
+          <Row>
+
+            <Col span={12}>
+              Sunday
+              <br/>
+              Monday
+              <br/>
+              Tuesday
+              <br/>
+              Wednesday
+              <br/>
+              Thursday
+              <br/>
+              Friday
+              <br/>
+              Saturday
+            </Col>
+            <Col span={12}>
+              11a.m.–12a.m.
+              <br/>
+              11a.m.–12a.m.
+              <br/>
+              11a.m.–12a.m.
+              <br/>
+              11a.m.–12a.m.
+              <br/>
+              11a.m.–12a.m.
+              <br/>
+              11a.m.–2a.m.
+              <br/>
+              11a.m.–2a.m.
+            </Col>
+          </Row>
+          <br/>
+          <b>EXCEPT Holidays</b>
+        </div>
+      ),
+    });
+  }
+
+  verifiyInput() {
+    const ValidateRegex = {
+      Number: /\D/g,
+      Letter: /^[^%*^~\'"\/\\<>|【】\[\],，!！?？]+$/g,
+      LetterOrIntOrSpace: /^[0-9a-zA-Z ]*$/g,
+      LetterEn: /^[a-zA-Z ]*$/g,
+      Phone: /^[0-9#,*()-]*$/g,
+      Email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      PostalCode: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+    };
+    if (!this.state.name || !ValidateRegex.LetterOrIntOrSpace.test(this.state.name.trim())) {
+      Modal.error({ title: '请输入正确格式姓名' });
+    } else if (!this.state.phone || !ValidateRegex.Phone.test(this.state.phone.trim())) {
+      Modal.error({ title: '请输入正确格式 电话号码' });
+    } else if (!this.state.email || !ValidateRegex.Email.test(this.state.email.trim())) {
+      Modal.error({ title: '请输入正确格式的 E-mail' });
+    } else if (!this.state.postalCode || !ValidateRegex.PostalCode.test(this.state.postalCode.trim())) {
+      Modal.error({ title: '请输入正确格式的 Postal Code' });
     } else {
+      // console.log('should be true');
+      return true;
+    }
+    return false;
+  }
+
+  goPay() {
+
+
+    if (!isOpen()) {
+      this.storeClosedMessage();
+    } else if (this.verifiyInput()) {
       const geo = geocoder({ key: geoPolygon.key });
       const currentAddress = `${this.state.street},${this.state.city},${this.state.province},${this.state.postalCode}`;
       geo.find(currentAddress, function(err: any, res: any) {
@@ -150,7 +222,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             inputSubMerchantId.setAttribute('value', currentStore.merchantId);
             makePayment();
           } else {
-            alert('Store is not available in your location!');
+            Modal.error({ title: '您所在的位置无法送餐' });
           }
         }
       });
@@ -190,10 +262,16 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
         <form id="myForm" name="mainForm" action="putorder" method="post" className={styles.background}>
 
           <div className={styles.headerCanvas}>
-            <div className={styles.headerCanvasTitle}>Shipping Info
+            <div className={styles.headerCanvasTitle}>
               <div className={styles.headerCanvasBackButton} onClick={() => {
                 this.goBack();
-              }}>&lt;&nbsp;Back</div>
+              }}><Icon type="left"/>Back
+              </div>
+              <div>
+                Shipping Info
+              </div>
+
+
             </div>
           </div>
           <hr className={styles.titleDivider}/>
@@ -209,36 +287,37 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             <tr>
               <td className={styles.leftCell}><span>Name:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'name'} placeholder={'input name'} className={styles.inputStyle}
-                       onChange={(e) => this.setState({ name: e.target.value })}/>
+                <input type="text" name={'name'} placeholder={'Jon Snow'} className={styles.inputStyle}
+                       onChange={(e) => this.setState({ name: e.target.value })} maxLength={30}/>
               </td>
             </tr>
             <tr>
               <td className={styles.leftCell}><span>Phone:</span></td>
               <td colSpan={2}>
-                <input type="tel" name={'phone'} placeholder={'phone'} className={styles.inputStyle}
-                       onChange={(e) => this.setState({ phone: e.target.value })}/>
+                <input type="tel" name={'phone'} placeholder={'(888)888-8888'} className={styles.inputStyle}
+                       onChange={(e) => this.setState({ phone: e.target.value })} maxLength={14}/>
               </td>
             </tr>
             <tr>
               <td className={styles.leftCell}><span>Email:</span></td>
               <td colSpan={2}>
-                <input type="email" name={'email'} placeholder={'email'} className={styles.inputStyle}
+                <input type="email" name={'email'} placeholder={'jon.snow@gmail.com'} className={styles.inputStyle}
                        onChange={(e) => this.setState({ email: e.target.value })}/>
               </td>
             </tr>
             <tr>
               <td className={styles.leftCell}><span>Street:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'street'} onChange={this.handleChange.bind(this)} placeholder={'street'}
-                       className={styles.inputStyle}/>
+                <input type="text" name={'4307 Winterfell Street'} onChange={this.handleChange.bind(this)}
+                       placeholder={'street'}
+                       className={styles.inputStyle} maxLength={70}/>
               </td>
             </tr>
             <tr>
               <td className={styles.leftCell}><span>City:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'city'} onChange={this.handleChange.bind(this)} placeholder={'city'}
-                       className={styles.inputStyle}/>
+                <input type="text" name={'city'} onChange={this.handleChange.bind(this)} placeholder={'Winterfell'}
+                       className={styles.inputStyle} maxLength={20}/>
               </td>
             </tr>
             <tr>
@@ -252,7 +331,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
               <td className={styles.leftCell}><span>Postal Code:</span></td>
               <td colSpan={2}>
                 <input type="text" name={'postalCode'} onChange={this.handleChange.bind(this)}
-                       placeholder={'postal code'} className={styles.inputStyle}/>
+                       placeholder={'A9A 9A9'} className={styles.inputStyle} maxLength={7}/>
               </td>
             </tr>
             </tbody>
@@ -275,7 +354,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'currentStore'} id={'currentStore'} readOnly/>
           <input type={hiddenFormType} name={'sub_merchantId'} id={'sub_merchantId'} readOnly/>
           <div className={styles.inline}>
-            <Button className={styles.cancel} onClick={() => this.clearCart()}>Clear Cart</Button>
+            {/*<Button className={styles.cancel} onClick={() => this.clearCart()}>Clear Cart</Button>*/}
             <Button className={styles.next} onClick={() => this.goPay()}>Go Pay</Button>
           </div>
         </form>

@@ -1,15 +1,12 @@
-import React, { Component, Fragment } from 'react';
-import styles from './index.css'
-
+import React, { Component } from 'react';
+import styles from './index.css';
+import {awsS3baseUrl} from '@/constants/env'
 interface IMenuTabsProps {
-  briefDetailData:any
+  briefDetailData: any
 }
 
 interface IMenuTabsStates {
 }
-
-const awsS3baseUrl = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/pics/menuPics/'
-
 
 class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
   constructor(props: any) {
@@ -17,11 +14,11 @@ class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
   }
 
   render() {
-    const { briefDetailData}=this.props
-    return briefDetailData?(
-      <Fragment>
+    const { briefDetailData } = this.props;
+    return briefDetailData ? (
+      <div>
         <div className={styles.picArea}>
-          <img className={styles.pizzaImage} src={awsS3baseUrl+briefDetailData.pic} alt={briefDetailData.name}/>
+          <img className={styles.pizzaImage} src={awsS3baseUrl + briefDetailData.pic} alt={briefDetailData.name}/>
         </div>
         <div className={styles.textArea}>
           <div className={styles.textAreaInner}>
@@ -31,8 +28,8 @@ class BriefDetail extends Component<IMenuTabsProps, IMenuTabsStates> {
             <div className={styles.pizzaPrice}>${briefDetailData.price}</div>
           </div>
         </div>
-      </Fragment>
-    ):(<Fragment/>);
+      </div>
+    ) : (<div/>);
   }
 }
 

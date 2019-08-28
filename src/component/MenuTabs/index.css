@@ -1,6 +1,8 @@
 .tab {
-    overflow: scroll;
+    overflow-x: scroll;
     white-space: nowrap;
+    margin: 0.5rem 0 0.5rem 0;
+    -webkit-overflow-scrolling: touch;
 }
 
 ::-webkit-scrollbar {
@@ -11,10 +13,11 @@
 
 .tab div {
     border: none;
-    border-radius: 7px;
+    border-radius: 28px;
     padding: 1rem;
     font-size: 1rem;
     color: black;
     display: inline-block;
     transition: all 0.2s ease-in-out;
+    margin: 0 0.4rem;
 }

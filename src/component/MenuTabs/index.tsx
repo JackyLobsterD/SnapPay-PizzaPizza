@@ -18,9 +18,13 @@ class MenuTabs extends Component<IMenuTabsProps, IMenuTabsStates> {
     this.props.callbackFunc(this.props.menuList[0], 0);
   }
 
-  clickAction = (item: any, key: any) => {
+  clickAction = (item: any, key: any, e: any) => {
     this.setState({ activeTab: key });
     this.props.callbackFunc(item, key);
+    // const k = e.target.getBoundingClientRect();
+    // console.log(k.x);
+    // console.log(k.left);
+    // document.getElementById('tabs').scrollLeft =k.x;
   };
 
   render() {
@@ -29,11 +33,12 @@ class MenuTabs extends Component<IMenuTabsProps, IMenuTabsStates> {
     const myStyle = { 'backgroundColor': 'black', 'color': 'white' };
     return (
       <Fragment>
-        <div className={styles.tab}>
+        <div className={styles.tab} id={'tabs'}>
           {
             menuList.map((item, key) => {
+
               return (
-                <div onClick={() => this.clickAction(item, key)} key={key} style={key === activeTab ? myStyle : {}}>
+                <div onClick={(e) => this.clickAction(item, key, e)} key={key} style={key === activeTab ? myStyle : {}}>
                   {item}
                 </div>
               );

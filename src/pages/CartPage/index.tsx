@@ -33,8 +33,8 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
     const priceList = {
       subtotal,
       deliveryFee: deliveryFee,
-      tax: parseFloat(String((reformed.totalPrice + deliveryFee) * 0.13)).toFixed(2),
-      total: parseFloat(String((reformed.totalPrice + deliveryFee) * 1.13)).toFixed(2),
+      tax: parseFloat(String((reformed.totalPrice + deliveryFee) * 0.12)).toFixed(2),
+      total: parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)).toFixed(2),
     };
     this.props.dispatch({ type: 'restaurants/savePriceList', payload: priceList });
     this.state = {

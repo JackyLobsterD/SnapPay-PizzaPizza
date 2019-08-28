@@ -6,6 +6,7 @@ import { isEmpty, getFromStorage } from '@/utils/tools';
 import router from 'umi/router';
 import { Button} from 'antd'
 import styles from './index.css';
+import { storeList } from '@/constants/stores';
 
 
 interface HomePageProps {
@@ -105,8 +106,8 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
   render() {
     const { pizzaPizzaTemplate } = this.props.restaurants;
     const { currentMenu } = this.state;
-    console.log(getFromStorage('cartList'))
-    console.log(this.state.visible )
+    // console.log(getFromStorage('cartList'))
+    // console.log(this.state.visible )
     if(!isEmpty(getFromStorage('cartList'))&&!this.state.visible){
       this.setState({visible:true})
     }
@@ -122,14 +123,23 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
           <MenuTabs menuList={menuList} callbackFunc={this.tabOnClick}/>
           <MenuItems currentMenu={currentMenu} callbackFunc={this.itemOnClick}/>
           <div className={styles.footer}>
-            <div>Pizza Pizza Customer Service:</div>
-            <span>(604)-277-1111</span>
-            <div className={styles.marginTop}>Store Locations:</div>
-            <div className={styles.footerInfo}>Surrey: 2370 152 St, Surrey, BC V4A 4N9</div>
-            <div className={styles.footerInfo}>New Westminster: 527 6th St, New Westminster, BC V3L 3B9</div>
-            <div className={styles.footerInfo}>Burnaby: 4461 Lougheed Hwy #3, Burnaby, BC V5C 3Z2</div>
-            <div className={styles.marginTop}>Snappay Customer Service:</div>
-            <div className={styles.footerInfo}>1(888)-660-7729</div>
+            <div className={styles.footerTitle}>Pizza Pizza Customer Service:</div>
+            <span><a href="Tel:(604)-277-1111">(604)-277-1111</a></span>
+            <div className={styles.footerTitle}>Store Locations:</div>
+            {
+              storeList.map((item, key)=>{
+                if(key===0){
+                  return null
+                }else{
+                  return(
+                    <div className={styles.footerInfo}>{item.city}: {item.street}, {item.postalCode}</div>
+                  )
+                }
+              })
+            }
+            <div className={styles.footerTitle}>Snappay Customer Service:</div>
+            <span><a href="Tel:1(888)-660-7729">1(888)-660-7729</a></span>
+
             <div className={styles.copyright}>© 2019 Snappay Inc. All Rights Reserved.</div>
           </div>
         </div>
