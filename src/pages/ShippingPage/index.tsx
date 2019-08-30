@@ -58,6 +58,13 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
+  }
+
   handleChange(event: any) {
     // @ts-ignore
     this.setState({ [event.target.name]: event.target.value });

@@ -29,6 +29,13 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
 
   }
 
+  componentDidMount() {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
+  }
+
   operateCartList() {
     const deliveryFee = 5;
     let reformed: any = {};

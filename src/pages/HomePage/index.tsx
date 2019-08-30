@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import MenuTabs from '@/component/MenuTabs';
 import MenuItems from '@/component/MenuItems';
-import { isEmpty, getFromStorage } from '@/utils/tools';
+import { getFromStorage, isEmpty } from '@/utils/tools';
 import router from 'umi/router';
-import { Button} from 'antd'
+import { Button } from 'antd';
 import styles from './index.css';
 import { storeList } from '@/constants/stores';
-
 
 interface HomePageProps {
   restaurants: any;
@@ -24,7 +23,6 @@ interface HomePageStates {
   displayCart: true
 }
 
-
 class HomePage extends Component<HomePageProps, HomePageStates> {
   constructor(props: any) {
     super(props);
@@ -38,52 +36,40 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
     };
   }
 
-  handleChange(event:any){
-    this.setState({
-      visible: true
-    })
+  componentDidMount() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+    });
   }
 
   tabOnClick = (menuItemTitle: string, menuItemTitleIndex: number) => {
     const pizzaPizzaTemplate = getFromStorage('pizzaPizzaTemplate');
     const currentMenu = pizzaPizzaTemplate.data.menuPage.details[menuItemTitleIndex];
     this.props.dispatch({ type: 'restaurants/saveTabIndex', payload: menuItemTitleIndex });
-    this.setState({ menuItemTitle, menuItemTitleIndex, currentMenu});
+    this.setState({ menuItemTitle, menuItemTitleIndex, currentMenu });
   };
 
-  itemOnClick = (itemId: string, itemIndex:number) => {
+  itemOnClick = (itemId: string, itemIndex: number) => {
     const { currentMenu } = this.state;
-    this.props.dispatch({ type: 'restaurants/fetchCurrentItemDetails' , payload: currentMenu.foodOptions[itemIndex]});
+    this.props.dispatch({ type: 'restaurants/fetchCurrentItemDetails', payload: currentMenu.foodOptions[itemIndex] });
     router.push('/ItemInfo');
   };
 
-  showCart = () => {
-    this.setState({
-      visible: true
-    });
-    if(this.goToCart() === null){
-      styles.viewCart.display = "none";
-    }
-  };
-
-  clearCart() {
-    this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
-  }
-
-  goToCart(){
-    let cartList= getFromStorage('cartList')
-    if (!cartList||!cartList[0]){
-      alert('No item in cart')
-    } else{
-      router.push('/CartPage')
+  static goToCart() {
+    let cartList = getFromStorage('cartList');
+    if (!cartList || !cartList[0]) {
+      alert('No item in cart');
+    } else {
+      router.push('/CartPage');
     }
   }
 
   render() {
     const { pizzaPizzaTemplate } = this.props.restaurants;
     const { currentMenu } = this.state;
-    if(!isEmpty(getFromStorage('cartList'))&&!this.state.visible){
-      this.setState({visible:true})
+    if (!isEmpty(getFromStorage('cartList')) && !this.state.visible) {
+      this.setState({ visible: true });
     }
     let menuList = [];
     if (!isEmpty(pizzaPizzaTemplate)) {
@@ -104,25 +90,21 @@ class HomePage extends Component<HomePageProps, HomePageStates> {
             <span><a href="Tel:1(888)-660-7729">1(888)-660-7729</a></span>
             <div className={styles.footerTitle}>Store Locations:</div>
             {
-              storeList.map((item, key)=>{
-                if(key===0){
-                  return null
-                }else{
-                  return(
+              storeList.map((item, key) => {
+                if (key === 0) {
+                  return null;
+                } else {
+                  return (
                     <div key={key} className={styles.footerInfo}>{item.city}: {item.street}, {item.postalCode}</div>
-                  )
+                  );
                 }
               })
             }
-
-
             <div className={styles.copyright}>© 2019 Snappay Inc. All Rights Reserved.</div>
           </div>
         </div>
-
-        {this.state.visible&&<Button className={styles.viewCart} onClick={this.goToCart.bind(this)} >View Cart</Button>}
-
-
+        {this.state.visible &&
+        <Button className={styles.viewCart} onClick={()=> HomePage.goToCart()}>View Cart</Button>}
       </div>
     );
   }
