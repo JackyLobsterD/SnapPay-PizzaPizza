@@ -411,6 +411,8 @@ export const pizzaPizzaTemplate = {
               },
               'options': [
                 sizeOption(0, 2, 4.5, 8),
+                pizzaSauceOption,
+                pizzaDrinkOption,
               ],
             },
             {

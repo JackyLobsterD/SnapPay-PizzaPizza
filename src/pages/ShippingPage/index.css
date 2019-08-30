@@ -1,12 +1,31 @@
+.spinningCover {
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    top: 0;
+}
+
+.spinningLogo {
+    position: fixed;
+    display: block;
+    top:40%;
+    left:50%;
+    height: 12rem;
+    width: 12rem;
+    margin-left: -6rem;
+    margin-top: -6rem;
+}
+
+
 .background {
-    background-color: white;
 }
 
 .headerCanvas {
     width: 100%;
     height: 70px;
     display: inline-block;
-    background-color: white;
 }
 
 form {
@@ -22,7 +41,8 @@ form {
     margin-right: 70px;
     color: black;
 }
-.headerCanvasBackButton{
+
+.headerCanvasBackButton {
     float: left;
     font-size: 20px;
     margin-left: 10px;
@@ -30,11 +50,11 @@ form {
     vertical-align: middle;
     color: black;
 }
+
 .headerCanvasBack {
-  float: left;
-  font-size: 20px;
-  background-color: white;
-  border: transparent;
+    float: left;
+    font-size: 20px;
+    border: transparent;
 }
 
 
@@ -61,23 +81,23 @@ form {
 }
 
 .tableStyle tr {
-  border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
 }
 
 .enterTitle {
     display: inline-block;
     font-size: 17px;
-    padding: 15px 0 15px 10px;
+    padding: 1rem 0;
     font-weight: 400;
 }
 
 .leftCell {
     width: 30%;
-    padding: 20px 0;
+    padding: 1.3rem 0;
 }
 
-input::placeholder{
-  color: #a49fa1;
+input::placeholder {
+    color: #a49fa1;
 }
 
 input {
@@ -189,35 +209,34 @@ textarea {
 }
 
 .cancel {
-  height: 50px;
-  width: 45%;
-  float: left;
-  border: 1px solid #5f5c5d;
-  border-radius: 6px;
-  background-color: white;
-  display: inline-block;
-  font-size: 20px;
-  font-weight: 300;
-  margin-left: 10px;
-  margin-bottom: 30px;
+    height: 50px;
+    width: 45%;
+    float: left;
+    border: 1px solid #5f5c5d;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 300;
+    margin-left: 10px;
+    margin-bottom: 30px;
 }
 
 .next {
-  width: 100%;
-  height: 50px;
-  border: solid #ff7f00;
-  background-color: #ff7f00;
-  font-family: Helvetica, serif;
-  font-size: 17px;
-  font-weight: 300;
-  color: #FFF7FB;
-  bottom: 0;
-  position: fixed;
-  padding: 0;
-  left: 0;
+    width: 100%;
+    height: 3.3rem;
+    border: none;
+    background-color: #ff7f00;
+    font-size: 1.4rem;
+    font-weight: 300;
+    border-radius: 0;
+    color: #FFF7FB;
+    bottom: 0;
+    position: fixed;
+    padding: 0;
+    left: 0;
 }
 
-.icon{
-  width: 50px;
-  height: 50px;
+.icon {
+    width: 50px;
+    height: 50px;
 }

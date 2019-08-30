@@ -83,8 +83,8 @@ class MultipleChoice extends Component<IMultipleChoiceProps, IMultipleChoiceStat
                              className={styles.formRadio}
                       />
                       {item.name}
+                      <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
                     </label>
-                    <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
 
                   </div>
                 );

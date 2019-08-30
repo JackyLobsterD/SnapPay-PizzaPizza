@@ -38,7 +38,7 @@ export const isOpen= ()=> {
   if (dow === 0 || dow === 6) {
     open = openTime('11.00-24.00', now) || openTime('00.00-2.00', now);
   } else if (dow > 0 || dow < 6) {
-    open = openTime('06.00-23.59', now);
+    open = openTime('11.00-23.59', now);
   }
   return open;
 };

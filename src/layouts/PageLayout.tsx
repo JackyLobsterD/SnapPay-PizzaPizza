@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Layout } from 'antd';
 
 export interface BasicLayoutProps {
@@ -7,18 +7,13 @@ export interface BasicLayoutProps {
 }
 
 class myLayouts extends React.Component <BasicLayoutProps> {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {};
-  // }
-
   render() {
     const { children } = this.props;
     return (
-      <Layout style={{backgroundColor:'white'}}>
-        <div>
-        </div>
-        {children}
+      <Layout style={{ backgroundColor: 'white' }}>
+          <div>
+          </div>
+          {children}
         <div>
         </div>
       </Layout>

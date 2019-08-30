@@ -7,8 +7,7 @@ const config: IConfig =  {
 
   treeShaking: true,
   history: 'hash',
-  publicPath: './',
-
+  publicPath: '/',
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {

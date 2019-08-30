@@ -61,16 +61,19 @@ class SingleChoice extends Component<ISingleChoiceProps, ISingleChoiceStates> {
             {data.options.map((item: any, key: number) => {
               return (
                 <div key={key}>
-                  <input type="radio" value={JSON.stringify(item)}
-                         id={item.id}
-                         name={data.id}
-                         key={key}
-                         onChange={this.handleChange.bind(this)}
-                         checked={item.id === this.state.selectedID}
-                         className={styles.formRadio}
-                  />
-                  <label htmlFor={item.id}>{item.name} </label>
-                  <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
+                  <label>
+                    <input type="radio" value={JSON.stringify(item)}
+                           id={item.id}
+                           name={data.id}
+                           key={key}
+                           onChange={this.handleChange.bind(this)}
+                           checked={item.id === this.state.selectedID}
+                           className={styles.formRadio}
+                    />
+                    <label htmlFor={item.id} className={styles.labelStyle}>{item.name} </label>
+                    <div className={styles.sizeOptionPrice}>+${item.price.toFixed(2)}</div>
+
+                  </label>
                 </div>
               );
             })}

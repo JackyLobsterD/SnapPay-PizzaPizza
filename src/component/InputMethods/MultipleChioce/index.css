@@ -1,13 +1,7 @@
 .sizeOption {
-    width: 105%;
-    height: auto;
-    /*border: solid #FFF7FB;
-    border-radius: 6px;*/
-    padding-right: 20px;
     font-family: Helvetica, serif;
     font-size: 15px;
     border: none;
-    /*background-color: #FFF7FB;*/
     font-weight: lighter;
 }
 

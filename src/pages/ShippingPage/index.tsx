@@ -1,18 +1,17 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Button, Col, Icon, Modal, Row, Select } from 'antd';
+import { Button, Icon, Modal } from 'antd';
 import styles from './index.css';
 // @ts-ignore
 import geocoder from 'google-geocoder';
 // @ts-ignore
-import classifyPoint from 'robust-point-in-polygon';
-import { getFromStorage, isEmpty } from '@/utils/tools';
+import { getCartListEmailFormatString, getFromStorage, getStoreIndex, isEmpty } from '@/utils/tools';
 import { storeList } from '@/constants/stores';
 import router from 'umi/router';
 import { geoPolygon, isOpen } from '@/constants/location';
-
-const { confirm } = Modal;
-const { Option, OptGroup } = Select;
+import loadingPizzaBig from '@/assets/spinning.gif';
+import { storeClosedMessage } from '@/component/ShowMessages';
+import { ValidateRegex } from '@/constants/rules';
 
 
 interface ShippingPageProps {
@@ -23,85 +22,39 @@ interface ShippingPageProps {
 }
 
 interface ShippingPageStates {
-  cartListString: string;
+  cartListStringMerchant: string,
+  cartListStringCustomer: string,
   street: string;
   province: string;
   city: string;
   postalCode: string;
-  isStoreExist: boolean;
   name: string;
   phone: string;
   email: string;
+  isSpinning: boolean;
 }
 
 class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
   constructor(props: any) {
     super(props);
-    let cartListString = '';
-    console.log(getFromStorage('newCartList'));
-    for (let [key, value] of Object.entries(getFromStorage('newCartList'))) {
-      for (let [key2, value2] of Object.entries(value)) {
-        if (key2 === 'name') {
-          cartListString += value2 + ' x' + value.quantity + '%' + '$' + (value.basePrice * value.quantity ).toFixed(2)+ '*/';
-        } else if (key2 === 'basePrice' || key2 === 'quantity') {
-
-        } else if (key2 === 'itemTotalPrice') {
-          cartListString += '小计' + '%' + '$' + (value2 * value.quantity).toFixed(2) + '@/';
-        } else if (key2 !== 'options') {
-          cartListString += key2 + '%' + value2 + '*/';
-        } else {
-          let optionValueString = '';
-          value2.forEach((optionItem: any) => {
-            optionItem.options.forEach((optionItemOptions: any) => {
-              //honey mustered    0.99
-              optionValueString += optionItemOptions.name + ' x' + value.quantity + '%' + '+$' + (optionItemOptions.price * value.quantity).toFixed(2) + '*/';
-            });
-          });
-          cartListString += optionValueString;
-        }
-      }
-      cartListString += '!/';
+    if (isEmpty(getFromStorage('newCartList'))) {
+      router.push('/HomePage');
     }
-    console.log(cartListString);
-    let cartList = cartListString;
+    let cartListStringMerchant = getCartListEmailFormatString(getFromStorage('newCartList'), 'Subtotal');
+    let cartListStringCustomer = getCartListEmailFormatString(getFromStorage('newCartList'), '小计');
+    // printCartListEmailFormat(cartListString);
 
-    for (let i = 0; i < 50; i++) {
-      let midNum1 = cartList.indexOf('/');
-      let midNum2 = midNum1 - 1;
-      let midNum3 = midNum1 + 1;
-
-
-      let endNum = cartList.length;
-      let mark = cartList.substring(midNum2, midNum1);
-      let val = cartList.substring(0, midNum2);
-      cartList = cartList.substring(midNum3, endNum);
-      if (mark === '%') {
-        console.log('%%%%' + val);
-      } else if (mark === '$') {
-        console.log('$$$$' + val);
-      } else if (mark === '#') {
-        console.log('----------');
-        console.log('$$$$' + val);
-      } else {
-        console.log(val);
-      }
-      console.log(mark);
-      if (cartList === '') {
-        break;
-      }
-    }
-
-    console.log(cartList);
     this.state = {
-      cartListString: cartListString,
+      cartListStringMerchant,
+      cartListStringCustomer,
       street: '',
       province: 'BC',
       city: '',
       postalCode: '',
-      isStoreExist: false,
       name: '',
       phone: '',
       email: '',
+      isSpinning: false,
     };
   }
 
@@ -110,70 +63,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  clearCart() {
-    this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
-    router.push('/HomePage');
-  }
-
-  goBack() {
-    router.goBack();
-  }
-
-  storeClosedMessage() {
-    Modal.error({
-      title: 'Sorry, store is closed',
-      content: (
-        <div>
-          <Row>
-
-            <Col span={12}>
-              Sunday
-              <br/>
-              Monday
-              <br/>
-              Tuesday
-              <br/>
-              Wednesday
-              <br/>
-              Thursday
-              <br/>
-              Friday
-              <br/>
-              Saturday
-            </Col>
-            <Col span={12}>
-              11a.m.–12a.m.
-              <br/>
-              11a.m.–12a.m.
-              <br/>
-              11a.m.–12a.m.
-              <br/>
-              11a.m.–12a.m.
-              <br/>
-              11a.m.–12a.m.
-              <br/>
-              11a.m.–2a.m.
-              <br/>
-              11a.m.–2a.m.
-            </Col>
-          </Row>
-          <br/>
-          <b>EXCEPT Holidays</b>
-        </div>
-      ),
-    });
-  }
-
   verifiyInput() {
-    const ValidateRegex = {
-      Number: /\D/g,
-      Letter: /^[^%*^~\'"\/\\<>|【】\[\],，!！?？]+$/g,
-      LetterOrIntOrSpace: /^[0-9a-zA-Z ]*$/g,
-      LetterEn: /^[a-zA-Z ]*$/g,
-      Phone: /^[0-9#,*()-]*$/g,
-      Email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      PostalCode: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
-    };
     if (!this.state.name || !ValidateRegex.LetterOrIntOrSpace.test(this.state.name.trim())) {
       Modal.error({ title: '请输入正确格式姓名' });
     } else if (!this.state.phone || !ValidateRegex.Phone.test(this.state.phone.trim())) {
@@ -190,36 +80,31 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
   }
 
   goPay() {
-
-
+    const _this = this;
     if (!isOpen()) {
-      this.storeClosedMessage();
+      storeClosedMessage();
     } else if (this.verifiyInput()) {
       const geo = geocoder({ key: geoPolygon.key });
       const currentAddress = `${this.state.street},${this.state.city},${this.state.province},${this.state.postalCode}`;
       geo.find(currentAddress, function(err: any, res: any) {
         // @ts-ignore
-        const makePayment = () => document.getElementById('myForm').submit();
-        const regValue = (array1: any) => array1.map((x: any) => Math.round(x * geoPolygon.multiplier));
-        const regValueArray = (array2: any) => array2.map((array1: any) => regValue(array1));
+        const makePayment = () => {
+          _this.setState({ isSpinning: true });
+          _this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
+          document.getElementById('myForm').submit();
+        };
+
         if (!isEmpty(res)) {
-          const coordinates = res[0].location;
-          const arrayDot = regValue([coordinates.lat, coordinates.lng]);
-          let westIndicator = 1;
-          geoPolygon.westminsterArray.forEach((item) => {
-            westIndicator = westIndicator * classifyPoint(regValueArray(item), arrayDot);
-          });
-          const inputCurrentStore = document.getElementById('currentStore');
-          const inputSubMerchantId = document.getElementById('sub_merchantId');
-          const inSurrey = classifyPoint(regValueArray(geoPolygon.surreyArray), arrayDot) < 0;
-          const inBurnaby = classifyPoint(regValueArray(geoPolygon.burnabyArray), arrayDot) < 0;
-          const inWest = westIndicator < 0;
-          if (inSurrey || inBurnaby || inWest) {
-            let currentStore = storeList[inSurrey ? 1 : inBurnaby ? 3 : 2];
+          const storeNumber = getStoreIndex(res[0].location);
+          if (storeNumber !== 0) {
+            let currentStore = storeList[storeNumber];
+            const inputCurrentStore = document.getElementById('currentStore');
+            const inputSubMerchantId = document.getElementById('sub_merchantId');
             // @ts-ignore
             inputCurrentStore.setAttribute('value', currentStore.detail);
             // @ts-ignore
             inputSubMerchantId.setAttribute('value', currentStore.merchantId);
+            // console.log('should be true');
             makePayment();
           } else {
             Modal.error({ title: '您所在的位置无法送餐' });
@@ -232,7 +117,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
   render() {
     const outputEntranceData = entranceData;
     const priceList = getFromStorage('priceList');
-    const hiddenFormType = 'text';
+    const hiddenFormType = 'hidden';
     console.log('==============================');
     console.log(
       {
@@ -253,24 +138,26 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
         merchantName: outputEntranceData.merchantName,
         payType: outputEntranceData.payType,
         openId: outputEntranceData.openId,
-        cartListString: this.state.cartListString,
+        comment: getFromStorage('comment'),
       },
     );
     return (
-      <Fragment>
-
+      <div key={'ShippingPage'}>
+        {this.state.isSpinning && <div className={styles.spinningCover}>
+          <img src={loadingPizzaBig} alt="" className={styles.spinningLogo}/>
+        </div>}
         <form id="myForm" name="mainForm" action="putorder" method="post" className={styles.background}>
 
           <div className={styles.headerCanvas}>
             <div className={styles.headerCanvasTitle}>
               <div className={styles.headerCanvasBackButton} onClick={() => {
-                this.goBack();
-              }}><Icon type="left"/>Back
+                router.goBack();
+              }}>
+                <Icon type="left"/>Back
               </div>
               <div>
                 Shipping Info
               </div>
-
 
             </div>
           </div>
@@ -283,7 +170,6 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
                 <div className={styles.enterTitle}>Enter Shipping Information</div>
               </td>
             </tr>
-            {/*{inputSection('NameTest',undefined, 'input name',false)}*/}
             <tr>
               <td className={styles.leftCell}><span>Name:</span></td>
               <td colSpan={2}>
@@ -349,16 +235,16 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'merchantName'} value={outputEntranceData.merchantName} readOnly/>
           <input type={hiddenFormType} name={'pay_type'} value={outputEntranceData.payType} readOnly/>
           <input type={hiddenFormType} name={'openId'} value={outputEntranceData.openId} readOnly/>
-          <input type={hiddenFormType} name={'cartList'} value={this.state.cartListString} readOnly/>
+          <input type={hiddenFormType} name={'cartList'} value={this.state.cartListStringCustomer} readOnly/>
+          <input type={hiddenFormType} name={'cartListMerchant'} value={this.state.cartListStringMerchant} readOnly/>
           <input type={hiddenFormType} name={'order_desc'} value={'PizzaPizza'} readOnly/>
           <input type={hiddenFormType} name={'currentStore'} id={'currentStore'} readOnly/>
           <input type={hiddenFormType} name={'sub_merchantId'} id={'sub_merchantId'} readOnly/>
           <div className={styles.inline}>
-            {/*<Button className={styles.cancel} onClick={() => this.clearCart()}>Clear Cart</Button>*/}
             <Button className={styles.next} onClick={() => this.goPay()}>Go Pay</Button>
           </div>
         </form>
-      </Fragment>
+      </div>
     );
   }
 }

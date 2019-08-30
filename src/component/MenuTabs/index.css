@@ -13,11 +13,11 @@
 
 .tab div {
     border: none;
-    border-radius: 28px;
+    border-radius: 1px;
     padding: 1rem;
     font-size: 1rem;
     color: black;
     display: inline-block;
     transition: all 0.2s ease-in-out;
-    margin: 0 0.4rem;
+    margin: 0 0.2rem;
 }

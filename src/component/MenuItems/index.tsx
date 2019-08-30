@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import styles from './index.css';
 import { isEmpty } from '@/utils/tools';
-import { Spin } from 'antd';
+import loadingPizza from '@/assets/spinning_med.gif';
+
 
 interface IMenuItemsProps {
   currentMenu: any,
@@ -9,7 +10,6 @@ interface IMenuItemsProps {
 }
 
 interface IMenuItemsStates {
-  aa:any,
 }
 
 const awsS3baseUrl = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/pics/menuPics/';
@@ -17,17 +17,7 @@ const awsS3baseUrl = 'https://snappay-ext.s3-us-west-2.amazonaws.com/pizzapizza/
 class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
   constructor(props: any) {
     super(props);
-    this.state=({aa:[]})
   }
-
-
-  handleOnLoading(key:number) {
-    let aa = this.props.currentMenu.foodOptions.map((item:any, z:any) =>{
-      return key === z? true:this.state.aa[z];
-    });
-    this.setState({ aa: aa });
-}
-
 
   render() {
     const { currentMenu } = this.props;
@@ -42,18 +32,7 @@ class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
                     <div className={styles.pizzaMenu} key={key} onClick={() => {
                       this.props.callbackFunc(item.id, key);
                     }}>
-
-
-                      <div className={styles.picArea}>
-                        {/*<Spin spinning={!this.state.aa[key]}>*/}
-                          <img src={awsS3baseUrl + item.briefDetail.pic} alt={item.briefDetail.name}
-                               onLoad={() => {
-                                 this.handleOnLoading(key)
-                               }}
-                               className={styles.pic}/>
-                        {/*</Spin>*/}
-                      </div>
-
+                        <LoadingPics picName={item.briefDetail.name} picUrl={awsS3baseUrl + item.briefDetail.pic}/>
                       <div className={styles.textArea}>
                         <div>
                           <div className={styles.pizzaName}>{item.briefDetail.name}</div>
@@ -69,6 +48,44 @@ class MenuItems extends Component<IMenuItemsProps, IMenuItemsStates> {
             </div>}
         </div>
       </Fragment>
+    );
+  }
+}
+
+interface ILoadingPicsProps {
+  picUrl: string,
+  picName: string
+}
+
+interface ILoadingPicsStates {
+  loaded: boolean,
+}
+
+class LoadingPics extends Component<ILoadingPicsProps, ILoadingPicsStates> {
+  constructor(props: any) {
+    super(props);
+    this.state = { loaded: false };
+  }
+
+  shouldComponentUpdate(nextProps:any, nextState:any){
+    if (this.props.picUrl!== nextProps.picUrl){
+      this.setState({loaded:false})
+    }
+    return true
+  }
+    render() {
+    const isShowStyle = { 'display': 'inline-block' };
+    const isHiddenStyle = { 'display': 'none' };
+    return (
+      <div className={styles.picArea}>
+        <img src={this.props.picUrl} alt={this.props.picName}
+             onLoad={() => {
+               this.setState({ loaded: true });
+             }}
+             className={styles.pic} style={this.state.loaded?isShowStyle:isHiddenStyle}/>
+        <img src={loadingPizza} alt="" style={!this.state.loaded ? isShowStyle : isHiddenStyle}/>
+      </div>
+
     );
   }
 }

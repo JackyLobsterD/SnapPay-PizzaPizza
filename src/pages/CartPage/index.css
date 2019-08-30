@@ -1,15 +1,20 @@
 
-.background {
-    background-color: white;
+.backgroundLine {
     width: 90%;
     margin: 0 5%;
 }
+
+
+.background {
+    width: 90%;
+    margin: 0 5%;
+}
+
 
 .headerCanvas {
     width: 100%;
     height: 70px;
     display: inline-block;
-    background-color: white;
 }
 
 form {
@@ -27,22 +32,22 @@ form {
 }
 
 .headerCanvasBackButton {
-  float: left;
-  font-size: 20px;
-  margin-left: 10px;
-  line-height: 70px;
-  vertical-align: middle;
-  color: black;
-  font-weight: 400;
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+    line-height: 70px;
+    vertical-align: middle;
+    color: black;
+    font-weight: 400;
 }
 
 
 .subheader {
-  font-size: 16px;
-  font-weight: lighter;
-  float: left;
-  margin: 20px 0 10px 20px;
-  color: black;
+    font-size: 16px;
+    font-weight: lighter;
+    float: left;
+    margin: 1.3rem 0 1.2rem 1.3rem;
+    color: black;
 }
 
 .label {
@@ -69,17 +74,17 @@ form {
     display: inline-block;
     font-size: 16px;
     width: 100%;
-    height: 60px;
+    height: 6rem;
     border: 1px solid lightgrey;
-    padding-left: 20px;
+    padding: 1rem;
 }
 
-.textarea::placeholder{
-  color: #bfbfbf;
+.textarea::placeholder {
+    color: #bfbfbf;
 }
 
-.textarea:focus{
-  color: #575455;
+.textarea:focus {
+    color: #575455;
 }
 
 
@@ -117,72 +122,72 @@ form {
 }
 
 .completeTotal {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 30px;
-  color: black;
-  margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 30px;
+    color: black;
+    margin-top: 20px;
 }
 
-.completeTotalPrice{
-  font-size: 16px;
-  font-weight: bold;
-  float: right;
-  margin-right: 10px;
-  display: inline;
-  color: black;
+.completeTotalPrice {
+    font-size: 16px;
+    font-weight: bold;
+    float: right;
+    margin-right: 10px;
+    display: inline;
+    color: black;
 }
 
 .total {
-  font-size: 16px;
-  font-weight: lighter;
-  line-height: 30px;
+    font-size: 16px;
+    font-weight: lighter;
+    line-height: 30px;
 }
 
 .totalPrice {
-  font-size: 16px;
-  font-weight: lighter;
-  float: right;
-  margin-right: 10px;
-  display: inline;
-  color: black;
+    font-size: 16px;
+    font-weight: lighter;
+    float: right;
+    margin-right: 10px;
+    display: inline;
+    color: black;
 }
 
 .cancel {
-  height: 45px;
-  width: 47%;
-  float: left;
-  border: 1px solid #5f5c5d;
-  border-radius: 6px;
-  background-color: white;
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 300;
-  position: fixed;
-  bottom: 10px;
-  padding: 0;
-  margin-left: 0;
+    height: 3.3rem;
+    width: 40%;
+    float: left;
+    border: 1px solid #5f5c5d;
+    border-radius: 0;
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 300;
+    position: fixed;
+    padding: 0;
+    margin-left: 0;
 }
 
 .next {
-  height: 45px;
-  width: 47%;
-  float: right;
-  border: 1px solid #ff7f00;
-  border-radius: 6px;
-  background-color: #ff7f00;
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 300;
-  color: #FFF7FB;
-  position: fixed;
-  bottom: 10px;
-  margin-left: 200px;
+    height: 3.3rem;
+    width: 100%;
+    float: right;
+    border: 1px solid #ff7f00;
+    border-radius: 0;
+    background-color: #ff7f00;
+    display: inline-block;
+    font-weight: 300;
+    color: #FFF7FB;
+    position: fixed;
+    font-size: 1.3rem;
+
 }
 
-.inline {
-    width: 90%;
-    margin: 50px 5% 0 10px;
+.buttonArea {
+    position: fixed;
+    height: 3.3rem;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 
@@ -191,7 +196,7 @@ form {
 }
 
 table tr td {
-  margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 
 .leftCell {
@@ -202,12 +207,23 @@ table tr td {
     width: 30%;
 }
 
+
+.deleteButton{
+    margin: 0.2rem 0 0 0;
+    width: 100%;
+    overflow: hidden
+}
 .separateLine {
     width: 100%;
-    border-top: 1px solid lightgray;
+    border-top: 1px solid #eeeeee;
     margin: 10px 0;
 }
 
+.separateLineShort {
+    width: 100%;
+    border-top: 1px solid #eeeeee;
+    margin: 10px auto;
+}
 
 .summaryArea {
     width: 90%;
@@ -215,31 +231,53 @@ table tr td {
 }
 
 
-.notesText{
-  font-size: 16px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+.notesText {
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
-.tipsButton{
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  border: 1px solid black;
-  border-radius: 50%;
-  font-size: 30px;
-  font-weight: lighter;
-  vertical-align: center;
-  background-color: black;
-  color: white;
-  margin: 20px 20px 30px 40px;
+.tipsButton {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: lighter;
+    vertical-align: center;
+    background-color: black;
+    color: white;
+    margin: 20px 20px 30px 40px;
 }
 
-.tipsDetail{
-  font-size: 16px;
-  font-weight: lighter;
-  line-height: 30px;
-  color: black;
-  margin-top: 10px;
-  margin-left: 20px;
+.tipsDetail {
+    font-size: 16px;
+    font-weight: lighter;
+    line-height: 30px;
+    color: black;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.commentArea{
+    width: 90%;
+    text-align: left;
+    margin: 1.3rem 5% 8rem 5%;
+}
+
+
+.example{
+
+}
+.example-leave {
+    background-color: green;
+    opacity: 1;
+
+}
+
+.example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+    background-color: red
 }

@@ -39,11 +39,10 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
 
 
   addToCart() {
-    const error = { error: '1' };
     const { newItem, quantity } = this.state;
     const { optionsChoosed } = newItem;
     let extraListError:any = {};
-    console.log(newItem);
+    // console.log(newItem);
     newItem.options&&newItem.options.forEach((item: any, index: any) => {
       if (item.type === 'multiple' && item.rules && item.rules.required === true) {
         if (!optionsChoosed[index]|| optionsChoosed[index].length===0) {
@@ -61,7 +60,7 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
 
     if (isEmpty(extraListError)) {
       const newItemWithQuantity = Object.assign({}, newItem, { quantity });
-      this.props.dispatch({ type: 'restaurants/fetchCartList', payload: newItemWithQuantity });
+      this.props.dispatch({ type: 'restaurants/fetchCartListAddOne', payload: newItemWithQuantity });
       router.goBack();
     }else{
       this.setState({extraListError})
@@ -87,11 +86,11 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
   }
 
   render() {
-    console.log(this.state.newItem);
+    // console.log(this.state.newItem);
     const { currentItemDetails } = this.state;
     const { briefDetail, options } = currentItemDetails;
     return (
-      <Fragment>
+      <div key={'ItemInfo'}>
         <div className={styles.background}>
           <div className={styles.headerCanvas}>
             <div className={styles.headerCanvasBackButton} onClick={() => this.goBack()}><Icon type="left" /></div>
@@ -117,7 +116,7 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
             <Button onClick={this.addToCart.bind(this)} className={styles.addCart}>Add To Cart</Button>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

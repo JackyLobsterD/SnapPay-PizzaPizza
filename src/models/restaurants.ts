@@ -7,9 +7,16 @@ export default {
     pizzaPizzaTemplate: {},
     currentItemDetails: {},
     cartList: [],
-    newCartList:[]
+    newCartList:[],
+    tabIndex:0
   },
   reducers: {
+    saveTabIndex: (state: any, { payload }: any) => {
+      return {
+        ...state,
+        tabIndex: payload,
+      };
+    },
     savePizzaPizzaTemplate: (state: any, { payload }: any) => {
       saveToStorage('pizzaPizzaTemplate', payload);
       return {
@@ -25,7 +32,7 @@ export default {
       };
     },
 
-    saveToCartList: (state: any, { payload }: any) => {
+    saveToCartListAddOne: (state: any, { payload }: any) => {
       let cartList = [];
       if (!payload || isEmpty(payload)) {
         saveToStorage('cartList', []);
@@ -38,6 +45,13 @@ export default {
       return {
         ...state,
         cartList,
+      };
+    },
+    saveToCartList: (state: any, { payload }: any) => {
+      saveToStorage('cartList', payload);
+      return {
+        ...state,
+        cartList: payload,
       };
     },
     savePriceList: (state: any, { payload }: any) => {
@@ -71,6 +85,9 @@ export default {
       yield put({ type: 'saveCurrentItemDetails', payload: payload });
     },
 
+    * fetchCartListAddOne({ payload }: any, { call, put }: any) {
+      yield put({ type: 'saveToCartListAddOne', payload: payload });
+    },
     * fetchCartList({ payload }: any, { call, put }: any) {
       yield put({ type: 'saveToCartList', payload: payload });
     },
