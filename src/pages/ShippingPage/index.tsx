@@ -88,9 +88,10 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
 
   goPay() {
     const _this = this;
+    let inputValidated= this.verifiyInput()
     if (!isOpen()) {
       storeClosedMessage();
-    } else if (this.verifiyInput()) {
+    } else if (inputValidated) {
       const geo = geocoder({ key: geoPolygon.key });
       const currentAddress = `${this.state.street},${this.state.city},${this.state.province},${this.state.postalCode}`;
       geo.find(currentAddress, function(err: any, res: any) {
@@ -140,6 +141,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
         tax: priceList.tax,
         deliveryFee: priceList.deliveryFee,
         amountInDollar: priceList.total,
+        amountInCents: priceList.amountInCents,
         projectId: outputEntranceData.projectId,
         merchantId: outputEntranceData.merchantId,
         merchantName: outputEntranceData.merchantName,
@@ -236,7 +238,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'deliveryFee'} value={priceList.deliveryFee} readOnly/>
           <input type={hiddenFormType} name={'amountInDollar'} value={priceList.total} readOnly/>
 
-          <input type={hiddenFormType} name={'amount'} value={1} readOnly/>
+          <input type={hiddenFormType} name={'amount'} value={priceList.amountInCents} readOnly/>
           <input type={hiddenFormType} name={'project_id'} value={outputEntranceData.projectId} readOnly/>
           <input type={hiddenFormType} name={'merchant_id'} value={outputEntranceData.merchantId} readOnly/>
           <input type={hiddenFormType} name={'merchantName'} value={outputEntranceData.merchantName} readOnly/>

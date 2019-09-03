@@ -49,6 +49,7 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
       deliveryFee: deliveryFee.toFixed(2),
       tax: parseFloat(String((reformed.totalPrice + deliveryFee) * 0.12)).toFixed(2),
       total: parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)).toFixed(2),
+      amountInCents: Math.round(parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)) * 100)
     };
     this.props.dispatch({ type: 'restaurants/savePriceList', payload: priceList });
     return { newCartList: reformed.newCartList, priceList };
