@@ -31,6 +31,14 @@ class ItemInfo extends Component<HomePageProps, HomePageStates> {
     this.state = { currentItemDetails, newItem, quantity: 1, extraListError: {}};
   }
 
+  componentDidMount() {
+    window.scrollTo({
+      top: 0,
+      left: 0
+    });
+  }
+
+
   getExtraList(value: any) {
     const { currentItemDetails } = this.state;
     const newItem = Object.assign({}, currentItemDetails, { optionsChoosed: value });

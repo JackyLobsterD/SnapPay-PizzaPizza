@@ -12,6 +12,7 @@ import { geoPolygon, isOpen } from '@/constants/location';
 import loadingPizzaBig from '@/assets/spinning.gif';
 import { storeClosedMessage } from '@/component/ShowMessages';
 import { ValidateRegex } from '@/constants/rules';
+import moment from 'moment';
 
 
 interface ShippingPageProps {
@@ -203,8 +204,8 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             <tr>
               <td className={styles.leftCell}><span>Street:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'4307 Winterfell Street'} onChange={this.handleChange.bind(this)}
-                       placeholder={'street'}
+                <input type="text" name={'street'} onChange={this.handleChange.bind(this)}
+                       placeholder={'4307 Winterfell Street'}
                        className={styles.inputStyle} maxLength={70}/>
               </td>
             </tr>
@@ -237,6 +238,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'tax'} value={priceList.tax} readOnly/>
           <input type={hiddenFormType} name={'deliveryFee'} value={priceList.deliveryFee} readOnly/>
           <input type={hiddenFormType} name={'amountInDollar'} value={priceList.total} readOnly/>
+          <input type={hiddenFormType} name={'clickTime'} value={moment().format('YYYY-MM-DD HH:mm:ss')} readOnly/>
 
           <input type={hiddenFormType} name={'amount'} value={priceList.amountInCents} readOnly/>
           <input type={hiddenFormType} name={'project_id'} value={outputEntranceData.projectId} readOnly/>
@@ -250,7 +252,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'currentStore'} id={'currentStore'} readOnly/>
           <input type={hiddenFormType} name={'sub_merchantId'} id={'sub_merchantId'} readOnly/>
           <div className={styles.inline}>
-            <Button className={styles.next} onClick={() => this.goPay()}>Go Pay</Button>
+            <div className={styles.next} onClick={() => this.goPay()}><span className={styles.nextText}>Go Pay</span></div>
           </div>
         </form>
       </div>

@@ -248,9 +248,8 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
           </div>
         </div>
 
-        <div className={styles.buttonArea}>
-          <Button className={styles.next} onClick={() => this.goShipping()}>Next</Button>
-        </div>
+          <div className={styles.next} onClick={() => this.goShipping()}><span
+            className={styles.nextText}>Next</span></div>
       </div>
     );
   }

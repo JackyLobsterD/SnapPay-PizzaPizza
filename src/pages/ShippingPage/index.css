@@ -10,8 +10,8 @@
 .spinningLogo {
     position: fixed;
     display: block;
-    top:40%;
-    left:50%;
+    top: 40%;
+    left: 50%;
     height: 12rem;
     width: 12rem;
     margin-left: -6rem;
@@ -232,9 +232,14 @@ textarea {
     border-radius: 0;
     color: #FFF7FB;
     bottom: 0;
-    position: fixed;
+    position: absolute;
     padding: 0;
     left: 0;
+}
+
+.nextText {
+    line-height: 3.3rem;
+    display: inline-block;
 }
 
 .icon {

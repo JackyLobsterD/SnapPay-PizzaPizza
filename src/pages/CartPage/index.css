@@ -177,10 +177,16 @@ form {
     display: inline-block;
     font-weight: 300;
     color: #FFF7FB;
-    position: fixed;
-    font-size: 1.3rem;
-
+    position: absolute;
+    font-size: 1.4rem;
+    text-align: center;
 }
+
+.nextText {
+    line-height: 3.3rem;
+    display: inline-block;
+}
+
 
 .buttonArea {
     position: fixed;
