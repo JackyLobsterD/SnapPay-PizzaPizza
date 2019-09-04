@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Button, Icon, Modal } from 'antd';
+import { Icon } from 'antd';
+import { Modal } from 'antd-mobile';
 import styles from './index.css';
 // @ts-ignore
 import geocoder from 'google-geocoder';
 // @ts-ignore
 import { getCartListEmailFormatString, getFromStorage, getStoreIndex, isEmpty } from '@/utils/tools';
-import { storeList } from '@/constants/stores';
 import router from 'umi/router';
 import { geoPolygon, isOpen } from '@/constants/location';
 import loadingPizzaBig from '@/assets/spinning.gif';
 import { storeClosedMessage } from '@/component/ShowMessages';
 import { ValidateRegex } from '@/constants/rules';
 import moment from 'moment';
+import { storeList } from '@/constants/stores';
 
+
+const alert = Modal.alert;
 
 interface ShippingPageProps {
   restaurants: any;
@@ -62,7 +65,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
   componentDidMount() {
     window.scrollTo({
       top: 0,
-      left: 0
+      left: 0,
     });
   }
 
@@ -73,13 +76,53 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
 
   verifiyInput() {
     if (!this.state.name || !ValidateRegex.LetterOrIntOrSpace.test(this.state.name.trim())) {
-      Modal.error({ title: '请输入正确格式姓名' });
+      alert('输入提示', <div>请输入正确格式姓名</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
     } else if (!this.state.phone || !ValidateRegex.Phone.test(this.state.phone.trim())) {
-      Modal.error({ title: '请输入正确格式 电话号码' });
+      alert('输入提示', <div>请输入正确格式电话号码</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
     } else if (!this.state.email || !ValidateRegex.Email.test(this.state.email.trim())) {
-      Modal.error({ title: '请输入正确格式的 E-mail' });
+      alert('输入提示', <div>请输入正确格式的E-mail</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
+    } else if (!this.state.street) {
+      alert('输入提示', <div>请输入街道信息</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
+    } else if (!this.state.city || !ValidateRegex.LetterEn.test(this.state.city.trim())) {
+      alert('输入提示', <div>请输入正确的城市名</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
     } else if (!this.state.postalCode || !ValidateRegex.PostalCode.test(this.state.postalCode.trim())) {
-      Modal.error({ title: '请输入正确格式的 Postal Code' });
+      alert('输入提示', <div>请输入正确格式的邮编</div>, [
+        {
+          text: '好', onPress: () => {
+            this.setState({ isSpinning: false });
+          },
+        },
+      ]);
     } else {
       // console.log('should be true');
       return true;
@@ -89,22 +132,28 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
 
   goPay() {
     const _this = this;
-    let inputValidated= this.verifiyInput()
+    _this.setState({ isSpinning: true });
+
+    let inputValidated = this.verifiyInput();
     if (!isOpen()) {
       storeClosedMessage();
     } else if (inputValidated) {
       const geo = geocoder({ key: geoPolygon.key });
       const currentAddress = `${this.state.street},${this.state.city},${this.state.province},${this.state.postalCode}`;
+      console.log(123);
+
       geo.find(currentAddress, function(err: any, res: any) {
+        console.log(123);
         // @ts-ignore
         const makePayment = () => {
           _this.setState({ isSpinning: true });
           _this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
+          // @ts-ignore
           document.getElementById('myForm').submit();
         };
 
-        if (!isEmpty(res)) {
-          const storeNumber = getStoreIndex(res[0].location);
+        const processPayment = (respond: any) => {
+          const storeNumber = getStoreIndex(respond.location);
           if (storeNumber !== 0) {
             let currentStore = storeList[storeNumber];
             const inputCurrentStore = document.getElementById('currentStore');
@@ -116,10 +165,108 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             // console.log('should be true');
             makePayment();
           } else {
-            Modal.error({ title: '您所在的位置无法送餐' });
+            alert('输入提示',
+              <div>
+                此位置无法送餐
+                <br/>
+              </div>, [
+                {
+                  text: '好', onPress: () => {
+                    _this.setState({ isSpinning: false });
+                  },
+                },
+              ]);
           }
+        };
+
+        if (!isEmpty(res)) {
+          alert('请确认您的地址',
+            <div>
+              您输入的地址：
+              <br/>
+              {`${_this.state.street} ${_this.state.city}, ${_this.state.province}, ${_this.state.postalCode}`}
+              <br/>
+              <br/>
+              建议地址：
+              <br/>
+              {res[0].formatted_address}
+              <br/>
+            </div>, [
+              {
+                text: '使用我输入的地址', onPress: () => {
+                  processPayment(res[0]);
+                },
+              },
+              {
+                text: '使用建议地址', onPress: () => {
+                  let street = '', city = '', postalCode = '';
+                  if (res[0].street_number) street += res[0].street_number.long_name;
+                  if (res[0].route) street += ' ' + res[0].route.short_name;
+                  if (res[0].city) city = res[0].city.long_name;
+                  if (res[0].postal_code) postalCode = res[0].postal_code.long_name;
+                  _this.setState({
+                    street, city, postalCode,
+                  });
+                  // @ts-ignore
+                  document.getElementById('street').value = street;
+                  // @ts-ignore
+                  document.getElementById('city').value = city;
+                  // @ts-ignore
+                  document.getElementById('postalCode').value = postalCode;
+                  processPayment(res[0]);
+                },
+              },
+              {
+                text: '重新输入', onPress: () => {
+                  _this.setState({ isSpinning: false });
+
+                },
+              },
+            ]);
+        } else {
+          alert('输入提示', <div>请输入正确地址</div>, [
+            {
+              text: '好', onPress: () => {
+              },
+            },
+          ]);
         }
+
+
       });
+      // geo.find(currentAddress, function(err: any, res: any) {
+      //   // @ts-ignore
+      //   const makePayment = () => {
+      //     _this.setState({ isSpinning: true });
+      //     _this.props.dispatch({ type: 'restaurants/fetchCartList', payload: [] });
+      //     document.getElementById('myForm').submit();
+      //   };
+      //
+      //   if (!isEmpty(res)) {
+      //     const storeNumber = getStoreIndex(res[0].location);
+      //     if (storeNumber !== 0) {
+      //       let currentStore = storeList[storeNumber];
+      //       const inputCurrentStore = document.getElementById('currentStore');
+      //       const inputSubMerchantId = document.getElementById('sub_merchantId');
+      //       // @ts-ignore
+      //       inputCurrentStore.setAttribute('value', currentStore.detail);
+      //       // @ts-ignore
+      //       inputSubMerchantId.setAttribute('value', currentStore.merchantId);
+      //       // console.log('should be true');
+      //       makePayment();
+      //     } else {
+      //       console.log(res[0].formatted_address);
+      //       alert('输入提示', <div>
+      //         您所在的位置无法送餐
+      //       </div>, [
+      //         {
+      //           text: '好', onPress: () => {
+      //           }
+      //         }
+      //       ])
+      //     }
+      //   }
+      // });
     }
   }
 
@@ -204,7 +351,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             <tr>
               <td className={styles.leftCell}><span>Street:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'street'} onChange={this.handleChange.bind(this)}
+                <input id={'street'} type="text" name={'street'} onChange={this.handleChange.bind(this)}
                        placeholder={'4307 Winterfell Street'}
                        className={styles.inputStyle} maxLength={70}/>
               </td>
@@ -212,7 +359,8 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             <tr>
               <td className={styles.leftCell}><span>City:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'city'} onChange={this.handleChange.bind(this)} placeholder={'Winterfell'}
+                <input id={'city'} type="text" name={'city'} onChange={this.handleChange.bind(this)}
+                       placeholder={'Winterfell'}
                        className={styles.inputStyle} maxLength={20}/>
               </td>
             </tr>
@@ -226,7 +374,7 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
             <tr>
               <td className={styles.leftCell}><span>Postal Code:</span></td>
               <td colSpan={2}>
-                <input type="text" name={'postalCode'} onChange={this.handleChange.bind(this)}
+                <input id={'postalCode'} type="text" name={'postalCode'} onChange={this.handleChange.bind(this)}
                        placeholder={'A9A 9A9'} className={styles.inputStyle} maxLength={7}/>
               </td>
             </tr>
@@ -252,7 +400,8 @@ class ShippingPage extends Component<ShippingPageProps, ShippingPageStates> {
           <input type={hiddenFormType} name={'currentStore'} id={'currentStore'} readOnly/>
           <input type={hiddenFormType} name={'sub_merchantId'} id={'sub_merchantId'} readOnly/>
           <div className={styles.inline}>
-            <div className={styles.next} onClick={() => this.goPay()}><span className={styles.nextText}>Go Pay</span></div>
+            <div className={styles.next} onClick={() => this.goPay()}><span className={styles.nextText}>Go Pay</span>
+            </div>
           </div>
         </form>
       </div>

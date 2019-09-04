@@ -72,10 +72,12 @@ export function getCartListEmailFormatString(newCartList: any, subtotalString: s
   for (let [key, value] of Object.entries(newCartList)) {
     for (let [key2, value2] of Object.entries(value)) {
       if (key2 === 'name') {
+        // @ts-ignore
         cartListString += value2 + ' x' + value.quantity + '%' + '$' + (value.basePrice * value.quantity).toFixed(2) + '*/';
       } else if (key2 === 'basePrice' || key2 === 'quantity') {
 
       } else if (key2 === 'itemTotalPrice') {
+        // @ts-ignore
         cartListString += subtotalString + '%' + '$' + (value2 * value.quantity).toFixed(2) + '@/';
       } else if (key2 !== 'options') {
         cartListString += key2 + '%' + value2 + '*/';
@@ -84,6 +86,7 @@ export function getCartListEmailFormatString(newCartList: any, subtotalString: s
         value2.forEach((optionItem: any) => {
           optionItem.options.forEach((optionItemOptions: any) => {
             //honey mustered    0.99
+            // @ts-ignore
             optionValueString += optionItemOptions.name + ' x' + value.quantity + '%' + '+$' + (optionItemOptions.price * value.quantity).toFixed(2) + '*/';
           });
         });
@@ -94,4 +97,3 @@ export function getCartListEmailFormatString(newCartList: any, subtotalString: s
   }
   return cartListString;
 }
-

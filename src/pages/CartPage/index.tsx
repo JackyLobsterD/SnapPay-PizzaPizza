@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
 import { getFromStorage, isEmpty } from '@/utils/tools';
 import { number, string } from 'prop-types';
 import { Button, Icon } from 'antd';
 import router from 'umi/router';
-import styles, {example} from './index.css';
+import styles from './index.css';
+
 interface CartPageProps {
   restaurants: any;
   dispatch: any;
@@ -32,7 +33,7 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
   componentDidMount() {
     window.scrollTo({
       top: 0,
-      left: 0
+      left: 0,
     });
   }
 
@@ -49,7 +50,7 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
       deliveryFee: deliveryFee.toFixed(2),
       tax: parseFloat(String((reformed.totalPrice + deliveryFee) * 0.12)).toFixed(2),
       total: parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)).toFixed(2),
-      amountInCents: Math.round(parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)) * 100)
+      amountInCents: Math.round(parseFloat(String((reformed.totalPrice + deliveryFee) * 1.12)) * 100),
     };
     this.props.dispatch({ type: 'restaurants/savePriceList', payload: priceList });
     return { newCartList: reformed.newCartList, priceList };
@@ -140,72 +141,72 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
         </div>
 
 
-          {
-            !isEmpty(newCartList) && newCartList.map((el1: any, index1: any) => {
-              return (
-                <div className={styles.background} key={index1}>
-                  <table className={styles.tableStyle}>
-                    <tr>
-                      <td className={styles.leftCell}>
-                        <div className={styles.nameLabel} key={index1}>
-                          <span>{el1.name} </span>
-                          <span style={{ color: '#2e94e4' }}>x {el1.quantity}</span>
-                        </div>
-                      </td>
-                      <td className={styles.rightCell}>
-                        <div className={styles.highlightBlue}>
-                          {`$${(el1.basePrice * el1.quantity).toFixed(2)}`}
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                  {
-                    el1.options.map((el2: any, index2: any) => {
-                      return (
-                        <div key={index2}>
-                          {
-                            el2.options.map((el3: any, index3: any) => {
-                              return (
-                                <table className={styles.tableStyle} key={index3}>
-                                  <tr>
-                                    <td className={styles.leftCell}>
-                                      <div>
-                                        {el3.name}
-                                      </div>
-                                    </td>
-                                    <td className={styles.rightCell}>
-                                      <div className={styles.highlightBlue}>
-                                        {`+ $${(el3.price * el1.quantity).toFixed(2)}`}
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              );
-                            })
-                          }
-                        </div>
-                      );
-                    })
-                  }
+        {
+          !isEmpty(newCartList) && newCartList.map((el1: any, index1: any) => {
+            return (
+              <div className={styles.background} key={index1}>
+                <table className={styles.tableStyle}>
+                  <tr>
+                    <td className={styles.leftCell}>
+                      <div className={styles.nameLabel} key={index1}>
+                        <span>{el1.name} </span>
+                        <span style={{ color: '#2e94e4' }}>x {el1.quantity}</span>
+                      </div>
+                    </td>
+                    <td className={styles.rightCell}>
+                      <div className={styles.highlightBlue}>
+                        {`$${(el1.basePrice * el1.quantity).toFixed(2)}`}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                {
+                  el1.options.map((el2: any, index2: any) => {
+                    return (
+                      <div key={index2}>
+                        {
+                          el2.options.map((el3: any, index3: any) => {
+                            return (
+                              <table className={styles.tableStyle} key={index3}>
+                                <tr>
+                                  <td className={styles.leftCell}>
+                                    <div>
+                                      {el3.name}
+                                    </div>
+                                  </td>
+                                  <td className={styles.rightCell}>
+                                    <div className={styles.highlightBlue}>
+                                      {`+ $${(el3.price * el1.quantity).toFixed(2)}`}
+                                    </div>
+                                  </td>
+                                </tr>
+                              </table>
+                            );
+                          })
+                        }
+                      </div>
+                    );
+                  })
+                }
 
-                  <div className={styles.deleteButton}>
-                    <Button style={{ 'float': 'right' }} type={'danger'} onClick={() => {
-                        const tempCartList = getFromStorage('cartList');
-                        tempCartList.splice(index1, 1);
-                        this.props.dispatch({ type: 'restaurants/saveToCartList', payload: tempCartList });
-                        const { newCartList, priceList } = this.operateCartList();
-                        this.setState({ newCartList, priceList });
-                    }}>Remove</Button>
-                  </div>
-
-
-                  <div className={styles.separateLineShort}>
-                  </div>
-
+                <div className={styles.deleteButton}>
+                  <Button style={{ 'float': 'right' }} type={'danger'} onClick={() => {
+                    const tempCartList = getFromStorage('cartList');
+                    tempCartList.splice(index1, 1);
+                    this.props.dispatch({ type: 'restaurants/saveToCartList', payload: tempCartList });
+                    const { newCartList, priceList } = this.operateCartList();
+                    this.setState({ newCartList, priceList });
+                  }}>Remove</Button>
                 </div>
-              );
-            })
-          }
+
+
+                <div className={styles.separateLineShort}>
+                </div>
+
+              </div>
+            );
+          })
+        }
         <div className={styles.summaryArea}>
           <div className={styles.total}>Subtotal
             <div className={styles.totalPrice}>
@@ -248,8 +249,8 @@ class CartPage extends Component<CartPageProps, CartPageStates> {
           </div>
         </div>
 
-          <div className={styles.next} onClick={() => this.goShipping()}><span
-            className={styles.nextText}>Next</span></div>
+        <div className={styles.next} onClick={() => this.goShipping()}><span
+          className={styles.nextText}>Next</span></div>
       </div>
     );
   }
